@@ -26,6 +26,11 @@ function calculateGrowth(initialValue, finalValue) {
   return ((finalValue - initialValue) / initialValue) * 100;
 }
 
+// check if growth or decline
+function checkGrowth(initialValue, finalValue) {
+  return finalValue >= initialValue ? true : false;
+}
+
 const investmentInput = document.getElementById("investment_amount");
 const investmentOutput = document.getElementById("investment_return_amount");
 
@@ -52,6 +57,12 @@ d3.csv("S&P_data.csv").then((data) => {
     }
     const grownAmount =
       investmentAmount + (investmentAmount * overall_growth) / 100;
-    investmentOutput.textContent = grownAmount.toFixed(2);
+    investmentOutput.textContent = grownAmount.toLocaleString();
+
+    if (checkGrowth(investmentAmount, grownAmount)) {
+      investmentOutput.style.color = "green";
+    } else if (!checkGrowth(investmentAmount, grownAmount)) {
+      investmentOutput.style.color = "red";
+    }
   });
 });
