@@ -1,11 +1,7 @@
-d3.csv("S&P_data.csv").then((data) => {
-  const processed_data = data.map((d) => ({
-    year: parseInt(d.Date.split("/")[2]),
-    month: parseInt(d.Date.split("/")[0]),
-    date: d.Date,
-    value: +d.Value,
-  }));
+total_data = [];
 
+// define functions
+function plotChart(processed_data) {
   console.log(processed_data);
   const trace = {
     x: processed_data.map((d) => d.date),
@@ -23,4 +19,16 @@ d3.csv("S&P_data.csv").then((data) => {
   };
 
   Plotly.newPlot("chart", [trace], layout);
+}
+
+// make chart and respond to events
+d3.csv("S&P_data.csv").then((data) => {
+  const processed_data = data.map((d) => ({
+    year: parseInt(d.Date.split("/")[2]),
+    month: parseInt(d.Date.split("/")[0]),
+    date: d.Date,
+    value: +d.Value,
+  }));
+
+  plotChart(processed_data);
 });
