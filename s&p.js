@@ -6,7 +6,7 @@ function plotChart(processed_data) {
   const trace = {
     x: processed_data.map((d) => d.date),
     y: processed_data.map((d) => d.value),
-    type: "line",
+    type: "scatter",
     mode: "lines",
     name: "S&P 500 Growth Over Time",
     line: { color: "steelblue" },
