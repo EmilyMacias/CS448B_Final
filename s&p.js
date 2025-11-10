@@ -1,4 +1,4 @@
-d3.csv("s&p.csv").then((data) => {
+d3.csv("S&P_data.csv").then((data) => {
   const processed_data = data.map((d) => ({
     year: parseInt(d.Date.split("/")[2]),
     month: parseInt(d.Date.split("/")[0]),
