@@ -11,7 +11,7 @@ d3.csv("S&P_data.csv").then((data) => {
     x: processed_data.map((d) => d.date),
     y: processed_data.map((d) => d.value),
     type: "line",
-    mode: "lines+markers",
+    mode: "lines",
     name: "S&P 500 Growth Over Time",
     line: { color: "steelblue" },
   };
