@@ -21,6 +21,11 @@ function plotChart(processed_data) {
   Plotly.newPlot("chart", [trace], layout);
 }
 
+// caluculate overall percentage growth
+function calculateGrowth(initialValue, finalValue) {
+  return ((finalValue - initialValue) / initialValue) * 100;
+}
+
 const investmentInput = document.getElementById("investment_amount");
 const investmentOutput = document.getElementById("investment_return_amount");
 
@@ -34,9 +39,19 @@ d3.csv("S&P_data.csv").then((data) => {
   }));
 
   plotChart(processed_data);
+  const overall_growth = calculateGrowth(
+    processed_data[0].value,
+    processed_data[processed_data.length - 1].value
+  );
 
   investmentInput.addEventListener("input", (event) => {
     const investmentAmount = parseFloat(event.target.value);
-    investmentOutput.textContent = investmentAmount.toFixed(2);
+    if (isNaN(investmentAmount)) {
+      investmentOutput.textContent = "0.00";
+      return;
+    }
+    const grownAmount =
+      investmentAmount + (investmentAmount * overall_growth) / 100;
+    investmentOutput.textContent = grownAmount.toFixed(2);
   });
 });
