@@ -21,7 +21,8 @@ function plotChart(processed_data) {
   Plotly.newPlot("chart", [trace], layout);
 }
 
-const investmentInput = document.getElementById("investment_amount");
+const investmentInput = document.getElementById("#investment_amount");
+const investmentOutput = document.getElementById("#investment_return_amount");
 
 // make chart and respond to events
 d3.csv("S&P_data.csv").then((data) => {
@@ -33,4 +34,9 @@ d3.csv("S&P_data.csv").then((data) => {
   }));
 
   plotChart(processed_data);
+
+  investmentInput.addEventListener("input", (event) => {
+    const investmentAmount = parseFloat(event.target.value);
+    investmentOutput.textContent = investmentAmount.toFixed(2);
+  });
 });
