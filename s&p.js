@@ -10,7 +10,7 @@ d3.csv("S&P_data.csv").then((data) => {
   const trace = {
     x: processed_data.map((d) => d.date),
     y: processed_data.map((d) => d.value),
-    type: "scatter",
+    type: "line",
     mode: "lines+markers",
     name: "S&P 500 Growth Over Time",
     line: { color: "steelblue" },
