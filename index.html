@@ -5,6 +5,12 @@
     <title>Financial literacy</title>
     <script src="https://d3js.org/d3.v7.min.js"></script>
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <style>
+      #overal_s_p {
+        margin-top: 50px;
+        flex-direction: "row";
+      }
+    </style>
   </head>
   <body>
     <h1>Financial Literacy Resources</h1>
@@ -14,7 +20,14 @@
       of your money compares to the growth of inflation in the United States.
     </p>
 
-    <div id="chart" style="width: 800px; height: 500px"></div>
-    <script src="s&p.js"></script>
+    <div id="overal_s_p">
+      <div id="chart" style="width: 800px; height: 500px"></div>
+      <script src="s&p.js"></script>
+      <input
+        type="text"
+        id="investment_amount"
+        placeholder="Investment Amount (USD)"
+      />
+    </div>
   </body>
 </html>
