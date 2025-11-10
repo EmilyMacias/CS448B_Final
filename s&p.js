@@ -1,14 +1,15 @@
 d3.csv("s&p.csv").then((data) => {
   const processed_data = data.map((d) => ({
-    year: parseInt(d.Date.split("-")[2]),
-    month: parseInt(d.Date.split("-")[0]),
+    year: parseInt(d.Date.split("/")[2]),
+    month: parseInt(d.Date.split("/")[0]),
+    date: d.Date,
     value: +d.Value,
   }));
 
   console.log(processed_data);
   const trace = {
-    x: sp500Growth.map((d) => d.month),
-    y: sp500Growth.map((d) => d.value),
+    x: processed_data.map((d) => d.date),
+    y: processed_data.map((d) => d.value),
     type: "scatter",
     mode: "lines+markers",
     name: "S&P 500 Growth Over Time",
