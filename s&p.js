@@ -4,7 +4,7 @@ const investmentInput = document.getElementById("investment_amount");
 const investmentOutput = document.getElementById("investment_return_amount");
 const investmentStartMonth = document.getElementById("investment_start_month");
 const investmentStartYear = document.getElementById("investment_start_year");
-const investedAmount = 0;
+let investedAmount = 0;
 
 // define functions
 function plotChart(processed_data) {
