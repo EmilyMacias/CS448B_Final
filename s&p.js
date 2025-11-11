@@ -81,7 +81,7 @@ d3.csv("S&P_data.csv").then((data) => {
 
   // update display based on investment input
   investmentInput.addEventListener("input", (event) => {
-    const investmentAmount = parseFloat(event.target.value);
+    let investmentAmount = parseFloat(event.target.value);
     investedAmount = investmentAmount;
     updateInvestmentReturn(investedAmount, overall_growth);
   });
