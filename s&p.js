@@ -1,4 +1,10 @@
+// define global variables
 total_data = [];
+const investmentInput = document.getElementById("investment_amount");
+const investmentOutput = document.getElementById("investment_return_amount");
+const investmentStartMonth = document.getElementById("investment_start_month");
+const investmentStartYear = document.getElementById("investment_start_year");
+const investedAmount = 0;
 
 // define functions
 function plotChart(processed_data) {
@@ -31,8 +37,21 @@ function checkGrowth(initialValue, finalValue) {
   return finalValue >= initialValue ? true : false;
 }
 
-const investmentInput = document.getElementById("investment_amount");
-const investmentOutput = document.getElementById("investment_return_amount");
+// update investment return display
+function updateInvestmentReturn(investedAmount, overall_growth) {
+  if (isNaN(investedAmount)) {
+    investmentOutput.textContent = "0.00";
+    return;
+  }
+  const grownAmount = investedAmount + (investedAmount * overall_growth) / 100;
+  investmentOutput.textContent = grownAmount.toLocaleString();
+
+  if (checkGrowth(investedAmount, grownAmount)) {
+    investmentOutput.style.color = "green";
+  } else if (!checkGrowth(investedAmount, grownAmount)) {
+    investmentOutput.style.color = "red";
+  }
+}
 
 // make chart and respond to events
 d3.csv("S&P_data.csv").then((data) => {
@@ -49,20 +68,21 @@ d3.csv("S&P_data.csv").then((data) => {
     processed_data[processed_data.length - 1].value
   );
 
+  // update investment start date based on input
+  investmentStartMonth.addEventListener("input", (event) => {
+    const month = event.target.value;
+    investmentStartMonth.textContent = month;
+  });
+
+  investmentStartYear.addEventListener("input", (event) => {
+    const year = event.target.value;
+    investmentStartYear.textContent = year;
+  });
+
+  // update display based on investment input
   investmentInput.addEventListener("input", (event) => {
     const investmentAmount = parseFloat(event.target.value);
-    if (isNaN(investmentAmount)) {
-      investmentOutput.textContent = "0.00";
-      return;
-    }
-    const grownAmount =
-      investmentAmount + (investmentAmount * overall_growth) / 100;
-    investmentOutput.textContent = grownAmount.toLocaleString();
-
-    if (checkGrowth(investmentAmount, grownAmount)) {
-      investmentOutput.style.color = "green";
-    } else if (!checkGrowth(investmentAmount, grownAmount)) {
-      investmentOutput.style.color = "red";
-    }
+    investedAmount = investmentAmount;
+    updateInvestmentReturn(investedAmount, overall_growth);
   });
 });
