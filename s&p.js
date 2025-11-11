@@ -64,10 +64,9 @@ function updateInvestmentReturn(investedAmount, overall_growth) {
 function filterData(data, start_month, start_year, end_month, end_year) {
   return data.filter(
     (d) =>
-      d.year > start_year ||
-      (d.year === start_year &&
-        d.month >= start_month &&
-        (d.year < end_year || (d.year === end_year && d.month <= end_month)))
+      (d.year > start_year ||
+        (d.year === start_year && d.month >= start_month)) &&
+      (d.year < end_year || (d.year === end_year && d.month <= end_month))
   );
 }
 
