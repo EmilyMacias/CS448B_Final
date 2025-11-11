@@ -72,7 +72,7 @@ function highlightSelectedRange(filteredData) {
         type: "rect",
         xref: "x",
         yref: "paper", // spans full y-axis
-        x0: filteredData.date,
+        x0: filteredData[0].date,
         x1: filteredData[filteredData - 1].date,
         y0: 0,
         y1: 1,
