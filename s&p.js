@@ -3,9 +3,13 @@ const investmentInput = document.getElementById("investment_amount");
 const investmentOutput = document.getElementById("investment_return_amount");
 const investmentStartMonth = document.getElementById("investment_start_month");
 const investmentStartYear = document.getElementById("investment_start_year");
+const investmentEndMonth = document.getElementById("investment_end_month");
+const investmentEndYear = document.getElementById("investment_end_year");
 let investedAmount = 0;
 let startMonth = 12;
 let startYear = 1927;
+let endMonth = 11;
+let endYear = 2025;
 let overall_growth = 0;
 let filteredData = [];
 
@@ -57,10 +61,13 @@ function updateInvestmentReturn(investedAmount, overall_growth) {
 }
 
 // filter data
-function filterData(data, start_month, start_year) {
+function filterData(data, start_month, start_year, end_month, end_year) {
   return data.filter(
     (d) =>
-      d.year > start_year || (d.year === start_year && d.month >= start_month)
+      d.year > start_year ||
+      (d.year === start_year &&
+        d.month >= start_month &&
+        (d.year < end_year || (d.year === end_year && d.month <= end_month)))
   );
 }
 
@@ -107,7 +114,13 @@ d3.csv("S&P_data.csv").then((data) => {
   investmentStartMonth.addEventListener("input", (event) => {
     let month = event.target.value;
     startMonth = parseInt(month);
-    filteredData = filterData(processed_data, startMonth, startYear);
+    filteredData = filterData(
+      processed_data,
+      startMonth,
+      startYear,
+      endMonth,
+      endYear
+    );
     overall_growth = calculateGrowth(
       filteredData[0].value,
       filteredData[filteredData.length - 1].value
@@ -119,7 +132,49 @@ d3.csv("S&P_data.csv").then((data) => {
   investmentStartYear.addEventListener("input", (event) => {
     const year = event.target.value;
     startYear = parseInt(year);
-    filteredData = filterData(processed_data, startMonth, startYear);
+    filteredData = filterData(
+      processed_data,
+      startMonth,
+      startYear,
+      endMonth,
+      endYear
+    );
+    overall_growth = calculateGrowth(
+      filteredData[0].value,
+      filteredData[filteredData.length - 1].value
+    );
+    updateInvestmentReturn(investedAmount, overall_growth);
+    highlightSelectedRange(filteredData);
+  });
+
+  investmentEndYear.addEventListener("input", (event) => {
+    const year = event.target.value;
+    endYear = parseInt(year);
+    filteredData = filterData(
+      processed_data,
+      startMonth,
+      startYear,
+      endMonth,
+      endYear
+    );
+    overall_growth = calculateGrowth(
+      filteredData[0].value,
+      filteredData[filteredData.length - 1].value
+    );
+    updateInvestmentReturn(investedAmount, overall_growth);
+    highlightSelectedRange(filteredData);
+  });
+
+  investmentEndMonth.addEventListener("input", (event) => {
+    const month = event.target.value;
+    endMonth = parseInt(month);
+    filteredData = filterData(
+      processed_data,
+      startMonth,
+      startYear,
+      endMonth,
+      endYear
+    );
     overall_growth = calculateGrowth(
       filteredData[0].value,
       filteredData[filteredData.length - 1].value
