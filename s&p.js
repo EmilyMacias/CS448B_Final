@@ -1,3 +1,5 @@
+const { homedir } = require("node:os");
+
 // define global variables
 const investmentInput = document.getElementById("investment_amount");
 const investmentOutput = document.getElementById("investment_return_amount");
@@ -64,6 +66,27 @@ function filterData(data, start_month, start_year) {
   );
 }
 
+// highlight area of chart based on investment date
+function highlightSelectedRange(filteredData) {
+  const layoutUpdate = {
+    shapes: [
+      {
+        type: "rect",
+        xref: "x",
+        yref: "paper", // spans full y-axis
+        x0: filteredData.date,
+        x1: filteredData[filteredData - 1].date,
+        y0: 0,
+        y1: 1,
+        fillcolor: "rgba(255, 200, 200, 0.2)", // semi-transparent pink
+        line: { width: 0 },
+      },
+    ],
+  };
+
+  Plotly.relayout("chart", layoutUpdate);
+}
+
 // make chart and respond to events
 d3.csv("S&P_data.csv").then((data) => {
   // initial setup
@@ -80,6 +103,8 @@ d3.csv("S&P_data.csv").then((data) => {
     processed_data[processed_data.length - 1].value
   );
 
+  highlightSelectedRange(processed_data);
+
   // update investment start date based on input
   investmentStartMonth.addEventListener("input", (event) => {
     let month = event.target.value;
@@ -90,6 +115,7 @@ d3.csv("S&P_data.csv").then((data) => {
       filteredData[filteredData.length - 1].value
     );
     updateInvestmentReturn(investedAmount, overall_growth);
+    highlightSelectedRange(filteredData);
   });
 
   investmentStartYear.addEventListener("input", (event) => {
@@ -101,6 +127,7 @@ d3.csv("S&P_data.csv").then((data) => {
       filteredData[filteredData.length - 1].value
     );
     updateInvestmentReturn(investedAmount, overall_growth);
+    highlightSelectedRange(filteredData);
   });
 
   // update display based on investment input
