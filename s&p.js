@@ -73,7 +73,7 @@ function highlightSelectedRange(filteredData) {
         xref: "x",
         yref: "paper", // spans full y-axis
         x0: filteredData[0].date,
-        x1: filteredData[filteredData - 1].date,
+        x1: filteredData[filteredData.length - 1].date,
         y0: 0,
         y1: 1,
         fillcolor: "rgba(255, 200, 200, 0.2)", // semi-transparent pink
