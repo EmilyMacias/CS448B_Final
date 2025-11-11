@@ -1,5 +1,3 @@
-const { start } = require("repl");
-
 // define global variables
 const investmentInput = document.getElementById("investment_amount");
 const investmentOutput = document.getElementById("investment_return_amount");
