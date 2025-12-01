@@ -5,6 +5,7 @@ const investmentStartMonth = document.getElementById("investment_start_month");
 const investmentStartYear = document.getElementById("investment_start_year");
 const investmentEndMonth = document.getElementById("investment_end_month");
 const investmentEndYear = document.getElementById("investment_end_year");
+const durationOutput = document.getElementById("duration");
 let investedAmount = 0;
 let startMonth = 12;
 let startYear = 1927;
@@ -42,6 +43,25 @@ function calculateGrowth(initialValue, finalValue) {
 // check if growth or decline
 function checkGrowth(initialValue, finalValue) {
   return finalValue >= initialValue ? true : false;
+}
+
+// calculate duration of investment
+function calculateDuration(start_month, start_year, end_month, end_year) {
+  let total_months = (end_year - start_year) * 12 + (end_month - start_month);
+  let years = Math.floor(total_months / 12);
+  let months = total_months % 12;
+  return { years: years, months: months };
+}
+
+// update duration display
+function updateDurationDisplay(start_month, start_year, end_month, end_year) {
+  const duration = calculateDuration(
+    start_month,
+    start_year,
+    end_month,
+    end_year
+  );
+  durationOutput.textContent = `Duration: ${duration.years} years and ${duration.months} months`;
 }
 
 // update investment return display
@@ -125,6 +145,7 @@ d3.csv("S&P_data.csv").then((data) => {
       filteredData[filteredData.length - 1].value
     );
     updateInvestmentReturn(investedAmount, overall_growth);
+    updateDurationDisplay(startMonth, startYear, endMonth, endYear);
     highlightSelectedRange(filteredData);
   });
 
@@ -142,6 +163,7 @@ d3.csv("S&P_data.csv").then((data) => {
       filteredData[0].value,
       filteredData[filteredData.length - 1].value
     );
+    updateDurationDisplay(startMonth, startYear, endMonth, endYear);
     updateInvestmentReturn(investedAmount, overall_growth);
     highlightSelectedRange(filteredData);
   });
@@ -160,6 +182,7 @@ d3.csv("S&P_data.csv").then((data) => {
       filteredData[0].value,
       filteredData[filteredData.length - 1].value
     );
+    updateDurationDisplay(startMonth, startYear, endMonth, endYear);
     updateInvestmentReturn(investedAmount, overall_growth);
     highlightSelectedRange(filteredData);
   });
@@ -178,6 +201,7 @@ d3.csv("S&P_data.csv").then((data) => {
       filteredData[0].value,
       filteredData[filteredData.length - 1].value
     );
+    updateDurationDisplay(startMonth, startYear, endMonth, endYear);
     updateInvestmentReturn(investedAmount, overall_growth);
     highlightSelectedRange(filteredData);
   });
