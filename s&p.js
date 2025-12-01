@@ -9,8 +9,8 @@ const durationOutput = document.getElementById("duration");
 let investedAmount = 0;
 let startMonth = 1;
 let startYear = 1928;
-let endMonth = 1;
-let endYear = 1928;
+let endMonth = 12;
+let endYear = 2024;
 let overall_growth = 0;
 let filteredData = [];
 
@@ -99,7 +99,7 @@ function highlightSelectedRange(filteredData) {
         xref: "x",
         yref: "paper", // spans full y-axis
         x0: filteredData[0].date,
-        x1: filteredData[0].date,
+        x1: filteredData[filteredData.length - 1].date,
         y0: 0,
         y1: 1,
         fillcolor: "rgba(255, 200, 200, 0.2)", // semi-transparent pink
@@ -128,6 +128,8 @@ d3.csv("S&P_data.csv").then((data) => {
   );
 
   highlightSelectedRange(processed_data);
+  investmentEndYear.value = endYear;
+  investmentEndMonth.value = endMonth;
 
   // update investment start date based on input
   investmentStartMonth.addEventListener("input", (event) => {
