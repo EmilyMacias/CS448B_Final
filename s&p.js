@@ -7,10 +7,10 @@ const investmentEndMonth = document.getElementById("investment_end_month");
 const investmentEndYear = document.getElementById("investment_end_year");
 const durationOutput = document.getElementById("duration");
 let investedAmount = 0;
-let startMonth = 12;
-let startYear = 1927;
-let endMonth = 11;
-let endYear = 2025;
+let startMonth = 1;
+let startYear = 1928;
+let endMonth = 1;
+let endYear = 1928;
 let overall_growth = 0;
 let filteredData = [];
 
@@ -61,7 +61,7 @@ function updateDurationDisplay(start_month, start_year, end_month, end_year) {
     end_month,
     end_year
   );
-  durationOutput.textContent = `Duration: ${duration.years} years and ${duration.months} months`;
+  durationOutput.textContent = `Investment Duration: ${duration.years} years and ${duration.months} months`;
 }
 
 // update investment return display
