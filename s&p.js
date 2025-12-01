@@ -130,6 +130,7 @@ d3.csv("S&P_data.csv").then((data) => {
   highlightSelectedRange(processed_data);
   investmentEndYear.value = endYear;
   investmentEndMonth.value = endMonth;
+  updateDurationDisplay(startMonth, startYear, endMonth, endYear);
 
   // update investment start date based on input
   investmentStartMonth.addEventListener("input", (event) => {
