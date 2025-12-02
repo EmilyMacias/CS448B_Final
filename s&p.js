@@ -130,7 +130,7 @@ window.addEventListener("DOMContentLoaded", () => {
           x1: endDate,
           y0: 0,
           y1: 1,
-          fillcolor: "rgba(255, 200, 200, 0.2)", // semi-transparent pink
+          fillcolor: "rgba(255, 200, 200, 0.4)", // semi-transparent pink
           line: { width: 0 },
         },
       ],
