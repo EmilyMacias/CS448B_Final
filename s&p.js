@@ -78,17 +78,17 @@ window.addEventListener("DOMContentLoaded", () => {
       investedAmount + (investedAmount * overall_growth) / 100;
     investmentOutput.textContent = grownAmount.toLocaleString();
 
-    if (checkGrowth(investedAmount, grownAmount)) {
-      investmentOutput.style.color = "green";
-    } else if (!checkGrowth(investedAmount, grownAmount)) {
-      investmentOutput.style.color = "red";
-    }
-
     const difference = grownAmount - investedAmount;
     const sign = difference >= 0 ? "+" : "-";
     addAmount.textContent = `(${sign}$${Math.abs(
       difference
     ).toLocaleString()})`;
+
+    if (checkGrowth(investedAmount, grownAmount)) {
+      addAmount.style.color = "green";
+    } else if (!checkGrowth(investedAmount, grownAmount)) {
+      addAmount.style.color = "red";
+    }
   }
 
   // filter data
