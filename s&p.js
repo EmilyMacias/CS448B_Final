@@ -118,14 +118,16 @@ window.addEventListener("DOMContentLoaded", () => {
 
   // highlight area of chart based on investment date
   function highlightSelectedRange(filteredData) {
+    startDate = "12/31/" + filterData[0].year;
+    endDate = "12/31/" + filterData[filteredData.length - 1].year;
     const layoutUpdate = {
       shapes: [
         {
           type: "rect",
           xref: "x",
           yref: "paper", // spans full y-axis
-          x0: filteredData[0].date,
-          x1: filteredData[filteredData.length - 1].date,
+          x0: startDate,
+          x1: endDate,
           y0: 0,
           y1: 1,
           fillcolor: "rgba(255, 200, 200, 0.2)", // semi-transparent pink
