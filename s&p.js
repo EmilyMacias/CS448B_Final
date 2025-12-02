@@ -154,9 +154,9 @@ window.addEventListener("DOMContentLoaded", () => {
     };
 
     if (overall_growth >= 0) {
-      returnsBox.style.backgroundColor = "#c8f2d4ff";
+      layoutUpdate.fillColor = "#c8f2d4ff";
     } else {
-      returnsBox.style.backgroundColor = "#f7d0d0ff";
+      layoutUpdate.fillColor = "#f7d0d0ff";
     }
     Plotly.relayout("chart", layoutUpdate);
   }
