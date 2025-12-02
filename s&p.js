@@ -118,8 +118,8 @@ window.addEventListener("DOMContentLoaded", () => {
 
   // highlight area of chart based on investment date
   function highlightSelectedRange(filteredData) {
-    startDate = "12/31/" + filterData[0].year;
-    endDate = "12/31/" + filterData[filteredData.length - 1].year;
+    startDate = "12/31/" + filteredData[0].year;
+    endDate = "12/31/" + filteredData[filteredData.length - 1].year;
     const layoutUpdate = {
       shapes: [
         {
