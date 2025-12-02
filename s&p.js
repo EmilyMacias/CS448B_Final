@@ -30,7 +30,7 @@ window.addEventListener("DOMContentLoaded", () => {
       y: processed_data.map((d) => d.value),
       type: "scatter",
       mode: "lines",
-      name: "S&P 500 Growth vs. Inflation Over Time",
+      name: "S&P 500 Growth",
       line: { color: "steelblue" },
     };
 
@@ -39,6 +39,7 @@ window.addEventListener("DOMContentLoaded", () => {
       y: inflation_data.map((d) => d.value),
       type: "scatter",
       mode: "lines",
+      name: "Inflation Rate",
       line: { color: "orange" },
     };
 
@@ -48,7 +49,7 @@ window.addEventListener("DOMContentLoaded", () => {
       yaxis: { title: "Percentage Change" },
       legend: {
         orientation: "h",
-        xanchor: "left",
+        xanchor: "right",
         x: 0.5,
         y: -0.45,
       },
