@@ -299,28 +299,30 @@
         <p id="duration"></p>
       </div>
       <div id="chart"><script src="s&p.js"></script></div>
-      <div id="returns" style="display: flex; flex-direction: column">
-        <h3><u>S&P Investing</u></h3>
-        <label>
-          Total Balance:
-          <span id="investment_return_amount">0</span>
-          <span id="investment_add_amount">(+0)</span>
-        </label>
-        <br />
-        <label>
-          Nominal Return:
-          <span id="nominal_return">0</span>
-        </label>
-        <br />
-        <label>
-          Cumulative Inflation:
-          <span id="cumulative_inflation">0</span>
-        </label>
-        <br />
-        <p id="investing_message"></p>
-      </div>
-      <div id="not_returns">
-        <h3><u>No Investing</u></h3>
+      <div id="side_panel" style="display: flex; flex-direction: column">
+        <div id="returns" style="display: flex; flex-direction: column">
+          <h3><u>S&P Investing</u></h3>
+          <label>
+            Total Balance:
+            <span id="investment_return_amount">0</span>
+            <span id="investment_add_amount">(+0)</span>
+          </label>
+          <br />
+          <label>
+            Nominal Return:
+            <span id="nominal_return">0</span>
+          </label>
+          <br />
+          <label>
+            Cumulative Inflation:
+            <span id="cumulative_inflation">0</span>
+          </label>
+          <br />
+          <p id="investing_message"></p>
+        </div>
+        <div id="not_returns">
+          <h3><u>No Investing</u></h3>
+        </div>
       </div>
     </div>
   </body>
