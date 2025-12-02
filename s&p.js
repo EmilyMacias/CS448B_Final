@@ -135,9 +135,14 @@ window.addEventListener("DOMContentLoaded", () => {
   }
 
   // highlight area of chart based on investment date
-  function highlightSelectedRange(filteredData) {
+  function highlightSelectedRange(filteredData, overall_growth) {
     startDate = "12/31/" + filteredData[0].year;
     endDate = "12/31/" + filteredData[filteredData.length - 1].year;
+    if (overall_growth >= 0) {
+      returnsBox.style.backgroundColor = "#c8f2d4ff";
+    } else {
+      returnsBox.style.backgroundColor = "#f7d0d0ff";
+    }
     const layoutUpdate = {
       shapes: [
         {
@@ -148,7 +153,6 @@ window.addEventListener("DOMContentLoaded", () => {
           x1: endDate,
           y0: 0,
           y1: 1,
-          fillcolor: "rgba(255, 200, 200, 0.4)", // semi-transparent pink
           line: { width: 0 },
         },
       ],
@@ -191,7 +195,7 @@ window.addEventListener("DOMContentLoaded", () => {
         );
 
         updateDurationDisplay(startMonth, startYear, endMonth, endYear);
-        highlightSelectedRange(yearly_processed);
+        highlightSelectedRange(yearly_processed, overall_growth);
         investmentEndYear.value = endYear;
         investmentEndMonth.value = endMonth;
 
@@ -212,7 +216,7 @@ window.addEventListener("DOMContentLoaded", () => {
           );
           updateInvestmentReturn(investedAmount, overall_growth);
           updateDurationDisplay(startMonth, startYear, endMonth, endYear);
-          highlightSelectedRange(filteredData);
+          highlightSelectedRange(filteredData, overall_growth);
         });
 
         investmentStartYear.addEventListener("input", (event) => {
@@ -231,7 +235,7 @@ window.addEventListener("DOMContentLoaded", () => {
           );
           updateDurationDisplay(startMonth, startYear, endMonth, endYear);
           updateInvestmentReturn(investedAmount, overall_growth);
-          highlightSelectedRange(filteredData);
+          highlightSelectedRange(filteredData, overall_growth);
         });
 
         investmentEndYear.addEventListener("input", (event) => {
@@ -250,7 +254,7 @@ window.addEventListener("DOMContentLoaded", () => {
           );
           updateDurationDisplay(startMonth, startYear, endMonth, endYear);
           updateInvestmentReturn(investedAmount, overall_growth);
-          highlightSelectedRange(filteredData);
+          highlightSelectedRange(filteredData, overall_growth);
         });
 
         investmentEndMonth.addEventListener("input", (event) => {
@@ -269,7 +273,7 @@ window.addEventListener("DOMContentLoaded", () => {
           );
           updateDurationDisplay(startMonth, startYear, endMonth, endYear);
           updateInvestmentReturn(investedAmount, overall_growth);
-          highlightSelectedRange(filteredData);
+          highlightSelectedRange(filteredData, overall_growth);
         });
 
         // update display based on investment input
