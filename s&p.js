@@ -140,9 +140,9 @@ window.addEventListener("DOMContentLoaded", () => {
     endDate = "12/31/" + filteredData[filteredData.length - 1].year;
     let color = "";
     if (overall_growth >= 0) {
-      color = "#c8f2d4ff";
+      color = "rgba(200, 255, 200, 0.4)";
     } else {
-      color = "#f7d0d0ff";
+      color = "rgba(255, 200, 200, 0.4)";
     }
 
     const layoutUpdate = {
@@ -157,6 +157,7 @@ window.addEventListener("DOMContentLoaded", () => {
           y1: 1,
           fillcolor: color, // default color
           line: { width: 0 },
+          layer: "below", // place behind traces
         },
       ],
     };
