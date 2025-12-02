@@ -150,7 +150,8 @@ window.addEventListener("DOMContentLoaded", () => {
     // Load yearly dataset for the graph
     d3.csv("yearly_s&p.csv").then((yearly) => {
       const yearly_processed = yearly.map((d) => ({
-        date: d.Year,
+        year: parseInt(d.Date.split("/")[2]),
+        date: d.Date,
         value: +d.Value,
       }));
 
