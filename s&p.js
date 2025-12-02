@@ -148,6 +148,7 @@ window.addEventListener("DOMContentLoaded", () => {
           x1: endDate,
           y0: 0,
           y1: 1,
+          fillColor: "#c8f2d4ff", // default color
           line: { width: 0 },
         },
       ],
