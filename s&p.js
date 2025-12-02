@@ -10,6 +10,7 @@ window.addEventListener("DOMContentLoaded", () => {
   const investmentEndYear = document.getElementById("investment_end_year");
   const durationOutput = document.getElementById("duration");
   const addAmount = document.getElementById("investment_add_amount");
+  const nominalReturn = document.getElementById("nominal_return");
   let investedAmount = 0;
   let startMonth = 1;
   let startYear = 1928;
@@ -77,6 +78,11 @@ window.addEventListener("DOMContentLoaded", () => {
     const grownAmount =
       investedAmount + (investedAmount * overall_growth) / 100;
     investmentOutput.textContent = grownAmount.toLocaleString();
+
+    nominalReturnVal = grownAmount / investedAmount;
+    nominalReturn.textContent = `Nominal Return: ${nominalReturnVal.toFixed(
+      2
+    )}`;
 
     const difference = grownAmount - investedAmount;
     const sign = difference >= 0 ? "+" : "-";
