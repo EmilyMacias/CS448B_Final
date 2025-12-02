@@ -138,11 +138,6 @@ window.addEventListener("DOMContentLoaded", () => {
   function highlightSelectedRange(filteredData, overall_growth) {
     startDate = "12/31/" + filteredData[0].year;
     endDate = "12/31/" + filteredData[filteredData.length - 1].year;
-    if (overall_growth >= 0) {
-      returnsBox.style.backgroundColor = "#c8f2d4ff";
-    } else {
-      returnsBox.style.backgroundColor = "#f7d0d0ff";
-    }
     const layoutUpdate = {
       shapes: [
         {
@@ -158,6 +153,11 @@ window.addEventListener("DOMContentLoaded", () => {
       ],
     };
 
+    if (overall_growth >= 0) {
+      returnsBox.style.backgroundColor = "#c8f2d4ff";
+    } else {
+      returnsBox.style.backgroundColor = "#f7d0d0ff";
+    }
     Plotly.relayout("chart", layoutUpdate);
   }
 
