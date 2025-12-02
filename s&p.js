@@ -79,10 +79,8 @@ window.addEventListener("DOMContentLoaded", () => {
       investedAmount + (investedAmount * overall_growth) / 100;
     investmentOutput.textContent = grownAmount.toLocaleString();
 
-    nominalReturnVal = grownAmount / investedAmount;
-    nominalReturn.textContent = `Nominal Return: ${nominalReturnVal.toFixed(
-      2
-    )}`;
+    nominalReturnVal = (grownAmount / investedAmount) * 100;
+    nominalReturn.textContent = `${nominalReturnVal.toFixed(2)} %`;
 
     const difference = grownAmount - investedAmount;
     const sign = difference >= 0 ? "+" : "-";
