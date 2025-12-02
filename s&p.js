@@ -23,15 +23,23 @@ window.addEventListener("DOMContentLoaded", () => {
   let filteredData = [];
 
   // define functions
-  function plotChart(processed_data) {
+  function plotChart(processed_data, inflation_data) {
     console.log(processed_data);
     const trace = {
       x: processed_data.map((d) => d.date),
       y: processed_data.map((d) => d.value),
       type: "scatter",
       mode: "lines",
-      name: "S&P 500 Growth Over Time",
+      name: "S&P 500 Growth vs. Inflation Over Time",
       line: { color: "steelblue" },
+    };
+
+    const inflationTrace = {
+      x: inflation_data.map((d) => d.date),
+      y: inflation_data.map((d) => d.value),
+      type: "scatter",
+      mode: "lines",
+      line: { color: "orange" },
     };
 
     const layout = {
@@ -40,7 +48,7 @@ window.addEventListener("DOMContentLoaded", () => {
       yaxis: { title: "Closing Prices" },
     };
 
-    Plotly.newPlot("chart", [trace], layout);
+    Plotly.newPlot("chart", [trace, inflationTrace], layout);
   }
 
   // caluculate overall percentage growth
@@ -157,100 +165,109 @@ window.addEventListener("DOMContentLoaded", () => {
         value: +d.Value,
       }));
 
-      plotChart(yearly_processed);
+      // Load yearly dataset for the graph
+      d3.csv("yearly_inflation.csv").then((yearly) => {
+        const yearly_processed_inflation = yearly.map((d) => ({
+          year: parseInt(d.Date.split("/")[2]),
+          date: d.Date,
+          value: +d.Value,
+        }));
 
-      overall_growth = calculateGrowth(
-        processed_data[0].value,
-        processed_data[processed_data.length - 1].value
-      );
+        plotChart(yearly_processed, yearly_processed_inflation);
 
-      updateDurationDisplay(startMonth, startYear, endMonth, endYear);
-      highlightSelectedRange(yearly_processed);
-      investmentEndYear.value = endYear;
-      investmentEndMonth.value = endMonth;
-
-      // update investment start date based on input
-      investmentStartMonth.addEventListener("input", (event) => {
-        let month = event.target.value;
-        startMonth = parseInt(month);
-        filteredData = filterData(
-          processed_data,
-          startMonth,
-          startYear,
-          endMonth,
-          endYear
-        );
         overall_growth = calculateGrowth(
-          filteredData[0].value,
-          filteredData[filteredData.length - 1].value
+          processed_data[0].value,
+          processed_data[processed_data.length - 1].value
         );
-        updateInvestmentReturn(investedAmount, overall_growth);
-        updateDurationDisplay(startMonth, startYear, endMonth, endYear);
-        highlightSelectedRange(filteredData);
-      });
 
-      investmentStartYear.addEventListener("input", (event) => {
-        const year = event.target.value;
-        startYear = parseInt(year);
-        filteredData = filterData(
-          processed_data,
-          startMonth,
-          startYear,
-          endMonth,
-          endYear
-        );
-        overall_growth = calculateGrowth(
-          filteredData[0].value,
-          filteredData[filteredData.length - 1].value
-        );
         updateDurationDisplay(startMonth, startYear, endMonth, endYear);
-        updateInvestmentReturn(investedAmount, overall_growth);
-        highlightSelectedRange(filteredData);
-      });
+        highlightSelectedRange(yearly_processed);
+        investmentEndYear.value = endYear;
+        investmentEndMonth.value = endMonth;
 
-      investmentEndYear.addEventListener("input", (event) => {
-        const year = event.target.value;
-        endYear = parseInt(year);
-        filteredData = filterData(
-          processed_data,
-          startMonth,
-          startYear,
-          endMonth,
-          endYear
-        );
-        overall_growth = calculateGrowth(
-          filteredData[0].value,
-          filteredData[filteredData.length - 1].value
-        );
-        updateDurationDisplay(startMonth, startYear, endMonth, endYear);
-        updateInvestmentReturn(investedAmount, overall_growth);
-        highlightSelectedRange(filteredData);
-      });
+        // update investment start date based on input
+        investmentStartMonth.addEventListener("input", (event) => {
+          let month = event.target.value;
+          startMonth = parseInt(month);
+          filteredData = filterData(
+            processed_data,
+            startMonth,
+            startYear,
+            endMonth,
+            endYear
+          );
+          overall_growth = calculateGrowth(
+            filteredData[0].value,
+            filteredData[filteredData.length - 1].value
+          );
+          updateInvestmentReturn(investedAmount, overall_growth);
+          updateDurationDisplay(startMonth, startYear, endMonth, endYear);
+          highlightSelectedRange(filteredData);
+        });
 
-      investmentEndMonth.addEventListener("input", (event) => {
-        const month = event.target.value;
-        endMonth = parseInt(month);
-        filteredData = filterData(
-          processed_data,
-          startMonth,
-          startYear,
-          endMonth,
-          endYear
-        );
-        overall_growth = calculateGrowth(
-          filteredData[0].value,
-          filteredData[filteredData.length - 1].value
-        );
-        updateDurationDisplay(startMonth, startYear, endMonth, endYear);
-        updateInvestmentReturn(investedAmount, overall_growth);
-        highlightSelectedRange(filteredData);
-      });
+        investmentStartYear.addEventListener("input", (event) => {
+          const year = event.target.value;
+          startYear = parseInt(year);
+          filteredData = filterData(
+            processed_data,
+            startMonth,
+            startYear,
+            endMonth,
+            endYear
+          );
+          overall_growth = calculateGrowth(
+            filteredData[0].value,
+            filteredData[filteredData.length - 1].value
+          );
+          updateDurationDisplay(startMonth, startYear, endMonth, endYear);
+          updateInvestmentReturn(investedAmount, overall_growth);
+          highlightSelectedRange(filteredData);
+        });
 
-      // update display based on investment input
-      investmentInput.addEventListener("input", (event) => {
-        let investmentAmount = parseFloat(event.target.value);
-        investedAmount = investmentAmount;
-        updateInvestmentReturn(investedAmount, overall_growth);
+        investmentEndYear.addEventListener("input", (event) => {
+          const year = event.target.value;
+          endYear = parseInt(year);
+          filteredData = filterData(
+            processed_data,
+            startMonth,
+            startYear,
+            endMonth,
+            endYear
+          );
+          overall_growth = calculateGrowth(
+            filteredData[0].value,
+            filteredData[filteredData.length - 1].value
+          );
+          updateDurationDisplay(startMonth, startYear, endMonth, endYear);
+          updateInvestmentReturn(investedAmount, overall_growth);
+          highlightSelectedRange(filteredData);
+        });
+
+        investmentEndMonth.addEventListener("input", (event) => {
+          const month = event.target.value;
+          endMonth = parseInt(month);
+          filteredData = filterData(
+            processed_data,
+            startMonth,
+            startYear,
+            endMonth,
+            endYear
+          );
+          overall_growth = calculateGrowth(
+            filteredData[0].value,
+            filteredData[filteredData.length - 1].value
+          );
+          updateDurationDisplay(startMonth, startYear, endMonth, endYear);
+          updateInvestmentReturn(investedAmount, overall_growth);
+          highlightSelectedRange(filteredData);
+        });
+
+        // update display based on investment input
+        investmentInput.addEventListener("input", (event) => {
+          let investmentAmount = parseFloat(event.target.value);
+          investedAmount = investmentAmount;
+          updateInvestmentReturn(investedAmount, overall_growth);
+        });
       });
     });
   });
