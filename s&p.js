@@ -147,99 +147,108 @@ window.addEventListener("DOMContentLoaded", () => {
       value: +d.Value,
     }));
 
-    plotChart(processed_data);
-    overall_growth = calculateGrowth(
-      processed_data[0].value,
-      processed_data[processed_data.length - 1].value
-    );
+    // Load yearly dataset for the graph
+    d3.csv("yearly_s&p.csv").then((yearly) => {
+      const yearly_processed = yearly.map((d) => ({
+        date: d.Year,
+        value: +d.Value,
+      }));
 
-    updateDurationDisplay(startMonth, startYear, endMonth, endYear);
-    highlightSelectedRange(processed_data);
-    investmentEndYear.value = endYear;
-    investmentEndMonth.value = endMonth;
+      plotChart(yearly_processed);
 
-    // update investment start date based on input
-    investmentStartMonth.addEventListener("input", (event) => {
-      let month = event.target.value;
-      startMonth = parseInt(month);
-      filteredData = filterData(
-        processed_data,
-        startMonth,
-        startYear,
-        endMonth,
-        endYear
-      );
       overall_growth = calculateGrowth(
-        filteredData[0].value,
-        filteredData[filteredData.length - 1].value
+        processed_data[0].value,
+        processed_data[processed_data.length - 1].value
       );
-      updateInvestmentReturn(investedAmount, overall_growth);
-      updateDurationDisplay(startMonth, startYear, endMonth, endYear);
-      highlightSelectedRange(filteredData);
-    });
 
-    investmentStartYear.addEventListener("input", (event) => {
-      const year = event.target.value;
-      startYear = parseInt(year);
-      filteredData = filterData(
-        processed_data,
-        startMonth,
-        startYear,
-        endMonth,
-        endYear
-      );
-      overall_growth = calculateGrowth(
-        filteredData[0].value,
-        filteredData[filteredData.length - 1].value
-      );
       updateDurationDisplay(startMonth, startYear, endMonth, endYear);
-      updateInvestmentReturn(investedAmount, overall_growth);
-      highlightSelectedRange(filteredData);
-    });
+      highlightSelectedRange(yearly_processed);
+      investmentEndYear.value = endYear;
+      investmentEndMonth.value = endMonth;
 
-    investmentEndYear.addEventListener("input", (event) => {
-      const year = event.target.value;
-      endYear = parseInt(year);
-      filteredData = filterData(
-        processed_data,
-        startMonth,
-        startYear,
-        endMonth,
-        endYear
-      );
-      overall_growth = calculateGrowth(
-        filteredData[0].value,
-        filteredData[filteredData.length - 1].value
-      );
-      updateDurationDisplay(startMonth, startYear, endMonth, endYear);
-      updateInvestmentReturn(investedAmount, overall_growth);
-      highlightSelectedRange(filteredData);
-    });
+      // update investment start date based on input
+      investmentStartMonth.addEventListener("input", (event) => {
+        let month = event.target.value;
+        startMonth = parseInt(month);
+        filteredData = filterData(
+          processed_data,
+          startMonth,
+          startYear,
+          endMonth,
+          endYear
+        );
+        overall_growth = calculateGrowth(
+          filteredData[0].value,
+          filteredData[filteredData.length - 1].value
+        );
+        updateInvestmentReturn(investedAmount, overall_growth);
+        updateDurationDisplay(startMonth, startYear, endMonth, endYear);
+        highlightSelectedRange(filteredData);
+      });
 
-    investmentEndMonth.addEventListener("input", (event) => {
-      const month = event.target.value;
-      endMonth = parseInt(month);
-      filteredData = filterData(
-        processed_data,
-        startMonth,
-        startYear,
-        endMonth,
-        endYear
-      );
-      overall_growth = calculateGrowth(
-        filteredData[0].value,
-        filteredData[filteredData.length - 1].value
-      );
-      updateDurationDisplay(startMonth, startYear, endMonth, endYear);
-      updateInvestmentReturn(investedAmount, overall_growth);
-      highlightSelectedRange(filteredData);
-    });
+      investmentStartYear.addEventListener("input", (event) => {
+        const year = event.target.value;
+        startYear = parseInt(year);
+        filteredData = filterData(
+          processed_data,
+          startMonth,
+          startYear,
+          endMonth,
+          endYear
+        );
+        overall_growth = calculateGrowth(
+          filteredData[0].value,
+          filteredData[filteredData.length - 1].value
+        );
+        updateDurationDisplay(startMonth, startYear, endMonth, endYear);
+        updateInvestmentReturn(investedAmount, overall_growth);
+        highlightSelectedRange(filteredData);
+      });
 
-    // update display based on investment input
-    investmentInput.addEventListener("input", (event) => {
-      let investmentAmount = parseFloat(event.target.value);
-      investedAmount = investmentAmount;
-      updateInvestmentReturn(investedAmount, overall_growth);
+      investmentEndYear.addEventListener("input", (event) => {
+        const year = event.target.value;
+        endYear = parseInt(year);
+        filteredData = filterData(
+          processed_data,
+          startMonth,
+          startYear,
+          endMonth,
+          endYear
+        );
+        overall_growth = calculateGrowth(
+          filteredData[0].value,
+          filteredData[filteredData.length - 1].value
+        );
+        updateDurationDisplay(startMonth, startYear, endMonth, endYear);
+        updateInvestmentReturn(investedAmount, overall_growth);
+        highlightSelectedRange(filteredData);
+      });
+
+      investmentEndMonth.addEventListener("input", (event) => {
+        const month = event.target.value;
+        endMonth = parseInt(month);
+        filteredData = filterData(
+          processed_data,
+          startMonth,
+          startYear,
+          endMonth,
+          endYear
+        );
+        overall_growth = calculateGrowth(
+          filteredData[0].value,
+          filteredData[filteredData.length - 1].value
+        );
+        updateDurationDisplay(startMonth, startYear, endMonth, endYear);
+        updateInvestmentReturn(investedAmount, overall_growth);
+        highlightSelectedRange(filteredData);
+      });
+
+      // update display based on investment input
+      investmentInput.addEventListener("input", (event) => {
+        let investmentAmount = parseFloat(event.target.value);
+        investedAmount = investmentAmount;
+        updateInvestmentReturn(investedAmount, overall_growth);
+      });
     });
   });
 });
