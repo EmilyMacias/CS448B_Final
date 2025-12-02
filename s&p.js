@@ -9,6 +9,7 @@ window.addEventListener("DOMContentLoaded", () => {
   const investmentEndMonth = document.getElementById("investment_end_month");
   const investmentEndYear = document.getElementById("investment_end_year");
   const durationOutput = document.getElementById("duration");
+  const addAmount = document.getElementById("investment_add_amount");
   let investedAmount = 0;
   let startMonth = 1;
   let startYear = 1928;
@@ -82,6 +83,12 @@ window.addEventListener("DOMContentLoaded", () => {
     } else if (!checkGrowth(investedAmount, grownAmount)) {
       investmentOutput.style.color = "red";
     }
+
+    const difference = grownAmount - investedAmount;
+    const sign = difference >= 0 ? "+" : "-";
+    addAmount.textContent = `(${sign}$${Math.abs(
+      difference
+    ).toLocaleString()})`;
   }
 
   // filter data
