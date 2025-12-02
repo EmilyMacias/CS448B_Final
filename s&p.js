@@ -46,6 +46,12 @@ window.addEventListener("DOMContentLoaded", () => {
       title: "S&P 500 Growth",
       xaxis: { title: "Date" },
       yaxis: { title: "Closing Prices" },
+      legend: {
+        orientation: "h",
+        xanchor: "center",
+        x: 0.5,
+        y: -0.2,
+      },
     };
 
     Plotly.newPlot("chart", [trace, inflationTrace], layout);
