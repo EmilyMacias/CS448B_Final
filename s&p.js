@@ -43,9 +43,9 @@ window.addEventListener("DOMContentLoaded", () => {
     };
 
     const layout = {
-      title: "S&P 500 Growth",
-      xaxis: { title: "Date" },
-      yaxis: { title: "Closing Prices" },
+      title: "S&P 500 Growth vs. Inflation Over Time",
+      xaxis: { title: "Year" },
+      yaxis: { title: "Percentage Change" },
       legend: {
         orientation: "h",
         xanchor: "center",
