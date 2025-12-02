@@ -12,6 +12,8 @@ window.addEventListener("DOMContentLoaded", () => {
   const addAmount = document.getElementById("investment_add_amount");
   const nominalReturn = document.getElementById("nominal_return");
   const investingMessage = document.getElementById("investing_message");
+  const notInvest = document.getElementById("no_invest");
+  const notInvestingMessage = document.getElementById("not_investing_message");
   let investedAmount = 0;
   let startMonth = 1;
   let startYear = 1928;
@@ -96,6 +98,12 @@ window.addEventListener("DOMContentLoaded", () => {
     } else if (!checkGrowth(investedAmount, grownAmount)) {
       addAmount.style.color = "red";
     }
+
+    notInvest.textContent = "$" + investedAmount.toLocaleString();
+    notInvestingMessage.textContent =
+      "Your original" +
+      investedAmount.toLocaleString() +
+      " has decreased significantly in value due to inflation";
   }
 
   // filter data
