@@ -101,7 +101,7 @@ window.addEventListener("DOMContentLoaded", () => {
 
     notInvest.textContent = "$" + investedAmount.toLocaleString();
     notInvestingMessage.textContent =
-      "Your original" +
+      "Your original " +
       investedAmount.toLocaleString() +
       " has decreased significantly in value due to inflation";
   }
