@@ -29,10 +29,9 @@
         display: flex;
         flex-direction: row;
         width: 100%;
-        background-color: plum;
       }
       #investment_info {
-        background-color: rgb(173, 216, 230, 0.5);
+        background-color: rgba(123, 125, 126, 0.786);
         padding: 10px;
         flex-shrink: 0;
         width: 25%;
@@ -397,6 +396,34 @@
           </div>
         </div>
         <div id="side_panel">
+          <div id="not_returns" style="display: flex; flex-direction: column">
+            <h3><u>No Investing</u></h3>
+            <label>
+              Total Balance:
+              <span id="no_invest">0</span>
+            </label>
+            <br />
+            <label>
+              Depreciation:
+              <span id="depreciation">0</span>
+            </label>
+            <br />
+            <p id="not_investing_message"></p>
+          </div>
+          <div id="hysa" style="display: flex; flex-direction: column">
+            <h3><u>HYSA</u></h3>
+            <label>
+              Total Balance:
+              <span id="no_invest">0</span>
+            </label>
+            <br />
+            <label>
+              Depreciation:
+              <span id="depreciation">0</span>
+            </label>
+            <br />
+            <p id="not_investing_message"></p>
+          </div>
           <div id="returns" style="display: flex; flex-direction: column">
             <h3><u>S&P Investing</u></h3>
             <label>
@@ -416,20 +443,6 @@
             </label>
             <br />
             <p id="investing_message"></p>
-          </div>
-          <div id="not_returns" style="display: flex; flex-direction: column">
-            <h3><u>No Investing</u></h3>
-            <label>
-              Total Balance:
-              <span id="no_invest">0</span>
-            </label>
-            <br />
-            <label>
-              Depreciation:
-              <span id="depreciation">0</span>
-            </label>
-            <br />
-            <p id="not_investing_message"></p>
           </div>
         </div>
       </div>
