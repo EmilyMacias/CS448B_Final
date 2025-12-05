@@ -127,7 +127,7 @@ window.addEventListener("DOMContentLoaded", () => {
       addAmount.style.color = "red";
     }
 
-    notInvest.textContent = "$" + investedAmount.toLocaleString();
+    notInvest.textContent = investedAmount.toLocaleString();
     notInvestingMessage.textContent =
       "Your original " +
       investedAmount.toLocaleString() +
