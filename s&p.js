@@ -50,7 +50,7 @@ window.addEventListener("DOMContentLoaded", () => {
       yaxis: { title: "Percentage Change" },
       legend: {
         orientation: "h",
-        xanchor: "right",
+        xanchor: "left",
         x: 0,
         y: -0.45,
       },
