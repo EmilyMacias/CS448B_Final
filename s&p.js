@@ -15,6 +15,7 @@ window.addEventListener("DOMContentLoaded", () => {
   const notInvest = document.getElementById("no_invest");
   const notInvestingMessage = document.getElementById("not_investing_message");
   const returnsBox = document.getElementById("returns");
+  const notReturnsBox = document.getElementById("not_returns");
   let investedAmount = 0;
   let startMonth = 1;
   let startYear = 1928;
@@ -117,12 +118,12 @@ window.addEventListener("DOMContentLoaded", () => {
     if (checkGrowth(investedAmount, grownAmount)) {
       addAmount.style.color = "green";
       returnsBox.style.backgroundColor = "rgba(200, 255, 200, 0.4)";
-      notInvest.style.backgroundColor = "rgba(255, 200, 200, 0.4)";
+      notReturnsBox.style.backgroundColor = "rgba(255, 200, 200, 0.4)";
       investingMessage.textContent =
         "Your investment has grown over time. You not only matched, but beat inflation, so your money has grown in value. More purchasing power for the win!";
     } else if (!checkGrowth(investedAmount, grownAmount)) {
       returnsBox.style.backgroundColor = "rgba(255, 200, 200, 0.4)";
-      notInvest.style.backgroundColor = "rgba(255, 200, 200, 0.4)";
+      notReturnsBox.style.backgroundColor = "rgba(255, 200, 200, 0.4)";
       addAmount.style.color = "red";
     }
 
