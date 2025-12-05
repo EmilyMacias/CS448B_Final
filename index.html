@@ -66,6 +66,10 @@
       #all_content {
         max-width: 80%;
       }
+      .dollar-sign {
+        font-weight: 600;
+        font-size: 1.15em;
+      }
     </style>
   </head>
   <body>
@@ -406,7 +410,7 @@
           <div id="not_returns" style="display: flex; flex-direction: column">
             <h3><u>No Investing</u></h3>
             <label>
-              Total Balance:
+              <span class="dollar-sign">$</span>
               <span id="no_invest">0</span>
             </label>
             <br />
@@ -420,7 +424,7 @@
           <div id="hysa" style="display: flex; flex-direction: column">
             <h3><u>HYSA</u></h3>
             <label>
-              Total Balance:
+              <span class="dollar-sign">$</span>
               <span id="no_invest">0</span>
             </label>
             <br />
@@ -434,7 +438,7 @@
           <div id="returns" style="display: flex; flex-direction: column">
             <h3><u>S&P Investing</u></h3>
             <label>
-              Total Balance:
+              <span class="dollar-sign">$</span>
               <span id="investment_return_amount">0</span>
               <span id="investment_add_amount">(+0)</span>
             </label>
