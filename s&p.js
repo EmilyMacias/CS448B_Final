@@ -51,14 +51,13 @@ window.addEventListener("DOMContentLoaded", () => {
       legend: {
         orientation: "h",
         xanchor: "right",
-        x: 0.5,
         y: -0.45,
       },
       autosize: true,
       margin: {
         t: 15,
         b: 0,
-        l: 0,
+        l: 15,
         r: 20,
       },
     };
