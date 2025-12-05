@@ -23,9 +23,23 @@
         display: flex;
         flex-direction: column;
       }
+      #top_section {
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+        align-items: flex-start;
+      }
       #chart {
         flex: 1;
         min-width: 0;
+        max-width: 70%;
+      }
+      #investment_info {
+        background-color: rgb(173, 216, 230, 0.5);
+        padding: 10px;
+        flex-shrink: 0;
+        width: 300px;
+        min-width: 300px;
       }
       #side_panel {
         display: flex;
@@ -36,21 +50,12 @@
       #returns {
         background-color: #dedcdc;
         padding: 10px;
-      }
-      #investment_info {
-        background-color: rgb(173, 216, 230, 0.5);
-        padding: 10px;
-        flex-shrink: 0;
+        flex: 1;
       }
       #not_returns {
         background-color: #f58d8d;
         padding: 10px;
-      }
-      #top_section {
-        display: flex;
-        flex-direction: row;
-        width: 100%;
-        background-color: pink;
+        flex: 1;
       }
     </style>
   </head>
@@ -123,7 +128,7 @@
 
     <div id="overal_s_p">
       <div id="top_section">
-        <div id="chart"><script src="s&p.js"></script></div>
+        <!-- <div id="chart"><script src="s&p.js"></script></div> -->
         <div id="investment_info" >
             <label>
               Start Month:
