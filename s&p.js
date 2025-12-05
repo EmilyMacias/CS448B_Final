@@ -51,7 +51,7 @@ window.addEventListener("DOMContentLoaded", () => {
       legend: {
         orientation: "h",
         xanchor: "right",
-        x: 1,
+        x: 0,
         y: -0.45,
       },
       autosize: true,
