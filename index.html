@@ -26,6 +26,17 @@
       #top_section {
         display: flex;
         flex-direction: row;
+        width: 100%;
+      }
+      #chart {
+        flex: 1;
+        min-width: 0;
+      }
+      #side_panel {
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+        margin-top: 20px;
       }
       #returns {
         background-color: #dedcdc;
@@ -110,7 +121,8 @@
     </p>
 
     <div id="overal_s_p">
-      <div id="top_section" style = "background-color: pink; display: flex; flex-direction: row;">
+      <div id="top_section">
+        <div id="chart"><script src="s&p.js"></script></div>
         <div id="investment_info">
             <label>
               Start Month:
@@ -357,9 +369,8 @@
           <br />
           <p id="duration"></p>
         </div>
-        <div id="chart"><script src="s&p.js"></script></div>
       </div>
-      <div id="side_panel" style="display: flex; flex-direction: row">
+      <div id="side_panel">
         <div id="returns" style="display: flex; flex-direction: column">
           <h3><u>S&P Investing</u></h3>
           <label>
