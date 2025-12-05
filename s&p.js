@@ -117,10 +117,12 @@ window.addEventListener("DOMContentLoaded", () => {
     if (checkGrowth(investedAmount, grownAmount)) {
       addAmount.style.color = "green";
       returnsBox.style.backgroundColor = "rgba(200, 255, 200, 0.4)";
+      notInvest.style.backgroundColor = "rgba(255, 200, 200, 0.4)";
       investingMessage.textContent =
         "Your investment has grown over time. You not only matched, but beat inflation, so your money has grown in value. More purchasing power for the win!";
     } else if (!checkGrowth(investedAmount, grownAmount)) {
       returnsBox.style.backgroundColor = "rgba(255, 200, 200, 0.4)";
+      notInvest.style.backgroundColor = "rgba(255, 200, 200, 0.4)";
       addAmount.style.color = "red";
     }
 
