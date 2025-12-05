@@ -70,6 +70,12 @@
         font-weight: 400;
         font-size: 1.3em;
       }
+      .horizontal-side-panel-amounts {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+      }
     </style>
   </head>
   <body>
@@ -409,15 +415,15 @@
         <div id="side_panel">
           <div id="not_returns" style="display: flex; flex-direction: column">
             <h3><u>No Investing</u></h3>
-            <label>
-              <span class="dollar-sign">$</span>
-              <span id="no_invest">0</span>
-            </label>
-            <br />
-            <label>
-              Depreciation:
-              <span id="depreciation">0</span>
-            </label>
+            <div class="horizontal-side-panel-amounts">
+              <label>
+                <span class="dollar-sign">$</span>
+                <span id="no_invest">0</span>
+              </label>
+              <div class="vertical-divider"></div>
+              <p>0 % real return</p>
+            </div>
+
             <br />
             <p id="not_investing_message"></p>
           </div>
