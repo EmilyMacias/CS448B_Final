@@ -58,7 +58,7 @@ window.addEventListener("DOMContentLoaded", () => {
       margin: {
         t: 10,
         b: 0,
-        l: 50,
+        l: 0,
         r: 20,
       },
     };
