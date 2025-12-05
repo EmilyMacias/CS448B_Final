@@ -56,8 +56,8 @@ window.addEventListener("DOMContentLoaded", () => {
       autosize: true,
       margin: {
         t: 35,
-        b: 0,
-        l: 0,
+        b: 60,
+        l: 50,
         r: 20,
       },
     };
