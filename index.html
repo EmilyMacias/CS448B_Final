@@ -26,20 +26,11 @@
       #top_section {
         display: flex;
         flex-direction: row;
-        width: 100%;
-        align-items: flex-start;
-      }
-      #chart {
-        flex: 1;
-        min-width: 0;
-        max-width: 70%;
       }
       #investment_info {
         background-color: rgb(173, 216, 230, 0.5);
         padding: 10px;
         flex-shrink: 0;
-        width: 300px;
-        min-width: 300px;
       }
       #side_panel {
         display: flex;
@@ -129,7 +120,20 @@
     <div id="overal_s_p">
       <div id="top_section">
         <!-- <div id="chart"><script src="s&p.js"></script></div> -->
-        <div id="investment_info" >
+        <div id="investment_info">
+          <h3><u>Your Investment Portal</u></h3>
+          <h4>How much do you want to invest?</h4>
+          <label>
+            $:
+            <input
+              type="text"
+              id="investment_amount"
+              placeholder="Investment Amount (USD)"
+            />
+          </label>
+          <br /><br />
+          <h4>How long do you want to keep your investment?</h4>
+          <div>
             <label>
               Start Month:
               <select name="investment_start_month" id="investment_start_month">
