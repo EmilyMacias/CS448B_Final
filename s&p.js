@@ -55,6 +55,12 @@ window.addEventListener("DOMContentLoaded", () => {
         y: -0.45,
       },
       autosize: true,
+      margin: {
+        t: 30,
+        b: 30,
+        l: 50,
+        r: 20,
+      },
     };
 
     Plotly.newPlot("chart", [trace, inflationTrace], layout);
