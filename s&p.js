@@ -202,12 +202,10 @@ window.addEventListener("DOMContentLoaded", () => {
     const cumulativeInflation = calculateCumulativeInflation(
       filteredData_inflation
     );
-    const inflationPercentage = (cumulativeInflation - 1) * 100;
-    notInvestingMessage.textContent = `Your original ${investedAmount.toLocaleString()} has decreased significantly in value due to inflation. Over this time period, inflation has reduced your purchasing power by ${inflationPercentage.toFixed(
+    const purchasingPower = (1 / (1 + 1 * cumulativeInflation)) * 100;
+    notInvestingMessage.textContent = `Your original amount has decreased significantly in value due to inflation. Over this time period, inflation has reduced your purchasing power. This means what you could buy with your original amount now has ${purchasingPower.toFixed(
       2
-    )}%. This means what you could buy with your original amount is now worth ${(
-      cumulativeInflation * 100
-    ).toFixed(2)}% of that original amount.`;
+    )}% less purchasing power.`;
   }
 
   // calculate HYSA return
@@ -316,7 +314,7 @@ window.addEventListener("DOMContentLoaded", () => {
     hysaInvestRealReturn.textContent = `${realReturn.toFixed(2)} % real return`;
     hysaMessage.textContent = `Your HYSA investment has grown over time. You not only matched, but beat inflation, so your money has grown in value by ${realReturn.toFixed(
       2
-    )}% in real terms. More purchasing power for the win!`;
+    )}%. More purchasing power for the win!`;
   }
 
   // filter data
