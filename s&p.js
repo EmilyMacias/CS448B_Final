@@ -144,8 +144,8 @@ window.addEventListener("DOMContentLoaded", () => {
 
   // update investment return display
   function updateInvestmentReturn(investedAmount, overall_growth) {
-    if (isNaN(investedAmount)) {
-      investmentOutput.textContent = "0.00";
+    if (isNaN(investedAmount) || investedAmount === 0) {
+      addAmount.textContent = "(+$0)";
       return;
     }
     const grownAmount = investedAmount + investedAmount * overall_growth;
@@ -156,11 +156,6 @@ window.addEventListener("DOMContentLoaded", () => {
     addAmount.textContent = `(${sign}$${Math.abs(
       difference
     ).toLocaleString()})`;
-
-    if (isNaN(investedAmount)) {
-      addAmount.textContent = "(+0)";
-      return;
-    }
 
     if (checkGrowth(investedAmount, grownAmount)) {
       addAmount.style.color = "green";
