@@ -23,7 +23,7 @@ function plotChart(processed_data) {
 
 // loading data and executing main logic
 d3.csv("MSPUS.csv").then((data) => {
-  const processed_data = housing_data.map((d) => ({
+  const processed_data = data.map((d) => ({
     date: d.observation_date,
     value: +d.MSPUS,
   }));
