@@ -438,17 +438,17 @@
           <!-- HYSA -->
           <div id="hysa" style="display: flex; flex-direction: column">
             <h3><u>HYSA</u></h3>
-            <label>
-              <span class="emphasis-text">$</span>
-              <span class="emphasis-text" id="hysa_amount">0</span>
-            </label>
-            <br />
-            <label>
-              Depreciation:
-              <span id="depreciation">0</span>
-            </label>
-            <br />
-            <p id="not_investing_message"></p>
+            <div class="horizontal-side-panel-amounts">
+              <label>
+                <span class="emphasis-text">$</span>
+                <span class="emphasis-text" id="hysa_return_amount">0</span>
+                <span id="hysa_add_amount">(+0)</span>
+              </label>
+              <div class="vertical-divider"></div>
+              <span id="hysa_invest_real_return" class="emphasis-text"
+                >0 % real return</span
+              >
+            </div>
           </div>
           <!-- S&P Investing -->
           <div id="returns" style="display: flex; flex-direction: column">
