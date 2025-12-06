@@ -135,12 +135,23 @@ window.addEventListener("DOMContentLoaded", () => {
     processed_data,
     filteredData_inflation
   ) {
+    if (isNaN(investedAmount) || investedAmount === 0) {
+      returnsBox.style.backgroundColor = "#ececec";
+      return;
+    }
     const realReturn = calculateRealReturn(
       investedAmount,
       processed_data,
       filteredData_inflation
     );
     spInvestRealReturn.textContent = `${realReturn.toFixed(2)} % real return`;
+
+    if (realReturn < 0) {
+      returnsBox.style.backgroundColor = "rgba(255, 200, 200, 0.4)";
+    } else {
+      returnsBox.style.backgroundColor = "rgba(200, 255, 200, 0.4)";
+    }
+
     if (realReturn > 0) {
       investingMessage.textContent = `Your investment has grown over time. You not only matched, but beat inflation, so your money has grown in value by ${realReturn.toFixed(
         2
@@ -191,13 +202,11 @@ window.addEventListener("DOMContentLoaded", () => {
 
     if (checkGrowth(investedAmount, grownAmount)) {
       addAmount.style.color = "green";
-      returnsBox.style.backgroundColor = "rgba(200, 255, 200, 0.4)";
-      notReturnsBox.style.backgroundColor = "rgba(255, 200, 200, 0.4)";
-    } else if (!checkGrowth(investedAmount, grownAmount)) {
-      returnsBox.style.backgroundColor = "rgba(255, 200, 200, 0.4)";
-      notReturnsBox.style.backgroundColor = "rgba(255, 200, 200, 0.4)";
+    } else {
       addAmount.style.color = "red";
     }
+
+    notReturnsBox.style.backgroundColor = "rgba(255, 200, 200, 0.4)";
 
     notInvest.textContent = investedAmount.toLocaleString();
     const cumulativeInflation = calculateCumulativeInflation(
