@@ -15,8 +15,7 @@ window.addEventListener("DOMContentLoaded", () => {
   const notInvestingMessage = document.getElementById("not_investing_message");
   const returnsBox = document.getElementById("returns");
   const notReturnsBox = document.getElementById("not_returns");
-  const noInvestRealReturn = document.getElementById("no_invest_real_return");
-  const spInvestRealReturn = document.getElementById("sp_invest_real_return");
+  const spInvestRealReturn = document.getElementById("S&P_invest_real_return");
   let investedAmount = 0;
   let startMonth = 1;
   let startYear = 1928;
@@ -106,7 +105,6 @@ window.addEventListener("DOMContentLoaded", () => {
   }
 
   function updateRealReturnDisplay(processed_data, filteredData_inflation) {
-    noInvestRealReturn.textContent = `${0} % real return`;
     spInvestRealReturn.textContent = `${calculateRealReturn(
       processed_data,
       filteredData_inflation
