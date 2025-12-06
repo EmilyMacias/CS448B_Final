@@ -301,7 +301,6 @@ window.addEventListener("DOMContentLoaded", () => {
 
     if (difference >= 0) {
       hysaAddAmount.style.color = "green";
-      hysaBox.style.backgroundColor = "rgba(200, 255, 200, 0.4)";
     }
 
     const realReturn = calculateHYSARealReturn(
@@ -312,10 +311,27 @@ window.addEventListener("DOMContentLoaded", () => {
       end_year,
       filteredData_inflation
     );
-    hysaInvestRealReturn.textContent = `${realReturn.toFixed(2)} % real return`;
-    hysaMessage.textContent = `Your HYSA investment has grown over time. You not only matched, but beat inflation, so your money has grown in value by ${realReturn.toFixed(
-      2
-    )}%. More purchasing power for the win!`;
+
+    if (difference < 0 || realReturn < 0) {
+      hysaBox.style.backgroundColor = "rgba(255, 200, 200, 0.4)";
+    } else {
+      hysaBox.style.backgroundColor = "rgba(200, 255, 200, 0.4)";
+    }
+
+    if (realReturn < 0) {
+      hysaMessage.textContent = `While you have made money through HYSA interest, it has not kept up with inflation. Your money has decreased in value by ${Math.abs(
+        realReturn
+      ).toFixed(
+        2
+      )}%, meaning you have less purchasing power than when you started.`;
+    } else {
+      hysaInvestRealReturn.textContent = `${realReturn.toFixed(
+        2
+      )} % real return`;
+      hysaMessage.textContent = `Your HYSA investment has grown over time. You not only matched, but beat inflation, so your money has grown in value by ${realReturn.toFixed(
+        2
+      )}%. More purchasing power for the win!`;
+    }
   }
 
   // filter data
