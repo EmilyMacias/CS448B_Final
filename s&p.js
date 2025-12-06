@@ -11,6 +11,7 @@ window.addEventListener("DOMContentLoaded", () => {
   const durationOutput = document.getElementById("duration");
   const addAmount = document.getElementById("investment_add_amount");
   const notInvest = document.getElementById("no_invest");
+  const noInvestRealReturn = document.getElementById("no_invest_real_return");
   const returnsBox = document.getElementById("returns");
   const notReturnsBox = document.getElementById("not_returns");
   const spInvestRealReturn = document.getElementById("S&P_invest_real_return");
@@ -207,6 +208,7 @@ window.addEventListener("DOMContentLoaded", () => {
     notInvestingMessage.textContent = `Your original amount has decreased significantly in value due to inflation. Over this time period, inflation has reduced your purchasing power. This means that your original amount now has ${purchasingPower.toFixed(
       2
     )}% less purchasing power.`;
+    noInvestRealReturn.textContent = `${realReturn.toFixed(2)} % real return`;
   }
 
   // calculate HYSA return
