@@ -99,6 +99,9 @@ window.addEventListener("DOMContentLoaded", () => {
     processed_data,
     filteredData_inflation
   ) {
+    if (isNaN(investedAmount) || investedAmount === 0) {
+      return 0;
+    }
     cumulativeInflation = calculateCumulativeInflation(filteredData_inflation);
     growth = calculateGrowth(
       processed_data[0].value,
