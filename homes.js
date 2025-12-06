@@ -21,6 +21,6 @@ function plotChart(housing_data) {
 }
 
 // loading data and executing main logic
-d3.csv("housing_data.csv").then((data) => {
+d3.csv("MSPUS.csv").then((data) => {
   plotChart(data);
 });
