@@ -202,7 +202,8 @@ window.addEventListener("DOMContentLoaded", () => {
     const cumulativeInflation = calculateCumulativeInflation(
       filteredData_inflation
     );
-    const purchasingPower = (1 / (1 + 1 * cumulativeInflation)) * 100;
+    const denom = 1 / (1 + cumulativeInflation);
+    const purchasingPower = (1 - denom) * 100;
     notInvestingMessage.textContent = `Your original amount has decreased significantly in value due to inflation. Over this time period, inflation has reduced your purchasing power. This means what you could buy with your original amount now has ${purchasingPower.toFixed(
       2
     )}% less purchasing power.`;
