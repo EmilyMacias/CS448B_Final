@@ -146,6 +146,7 @@ window.addEventListener("DOMContentLoaded", () => {
   function updateInvestmentReturn(investedAmount, overall_growth) {
     if (isNaN(investedAmount) || investedAmount === 0) {
       addAmount.textContent = "(+$0)";
+      investmentOutput.textContent = "0.00";
       return;
     }
     const grownAmount = investedAmount + investedAmount * overall_growth;
