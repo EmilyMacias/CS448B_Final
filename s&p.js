@@ -174,12 +174,20 @@ window.addEventListener("DOMContentLoaded", () => {
 
   // filter data
   function filterData(data, start_month, start_year, end_month, end_year) {
-    return data.filter(
-      (d) =>
-        (d.year > start_year ||
-          (d.year === start_year && d.month >= start_month)) &&
-        (d.year < end_year || (d.year === end_year && d.month <= end_month))
-    );
+    return data.filter((d) => {
+      // Handle data with month property (monthly data)
+      if (d.month !== undefined) {
+        return (
+          (d.year > start_year ||
+            (d.year === start_year && d.month >= start_month)) &&
+          (d.year < end_year || (d.year === end_year && d.month <= end_month))
+        );
+      }
+      // Handle data without month property (yearly data)
+      else {
+        return d.year >= start_year && d.year <= end_year;
+      }
+    });
   }
 
   // highlight area of chart based on investment date
@@ -240,16 +248,33 @@ window.addEventListener("DOMContentLoaded", () => {
 
         plotChart(yearly_processed, yearly_processed_inflation);
 
+        filteredData = filterData(
+          processed_data,
+          startMonth,
+          startYear,
+          endMonth,
+          endYear
+        );
+
+        filteredData_inflation = filterData(
+          yearly_processed_inflation,
+          startMonth,
+          startYear,
+          endMonth,
+          endYear
+        );
+
         overall_growth = calculateGrowth(
-          processed_data[0].value,
-          processed_data[processed_data.length - 1].value
+          filteredData[0].value,
+          filteredData[filteredData.length - 1].value
         );
 
         updateRealReturnDisplay(
           investedAmount,
-          processed_data,
-          yearly_processed_inflation
+          filteredData,
+          filteredData_inflation
         );
+        updateInvestmentReturn(investedAmount, overall_growth);
         updateDurationDisplay(startMonth, startYear, endMonth, endYear);
         highlightSelectedRange(yearly_processed, overall_growth);
         investmentEndYear.value = endYear;
