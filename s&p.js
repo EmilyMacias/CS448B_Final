@@ -10,9 +10,7 @@ window.addEventListener("DOMContentLoaded", () => {
   const investmentEndYear = document.getElementById("investment_end_year");
   const durationOutput = document.getElementById("duration");
   const addAmount = document.getElementById("investment_add_amount");
-  const investingMessage = document.getElementById("investing_message");
   const notInvest = document.getElementById("no_invest");
-  const notInvestingMessage = document.getElementById("not_investing_message");
   const returnsBox = document.getElementById("returns");
   const notReturnsBox = document.getElementById("not_returns");
   const spInvestRealReturn = document.getElementById("S&P_invest_real_return");
@@ -158,6 +156,11 @@ window.addEventListener("DOMContentLoaded", () => {
     addAmount.textContent = `(${sign}$${Math.abs(
       difference
     ).toLocaleString()})`;
+
+    if (isNaN(investedAmount)) {
+      addAmount.textContent = "(+0)";
+      return;
+    }
 
     if (checkGrowth(investedAmount, grownAmount)) {
       addAmount.style.color = "green";
