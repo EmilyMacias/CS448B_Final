@@ -96,15 +96,21 @@ window.addEventListener("DOMContentLoaded", () => {
 
   function calculateRealReturn(processed_data, filteredData_inflation) {
     cumulativeInflation = calculateCumulativeInflation(filteredData_inflation);
-    nominalReturnVal =
-      processed_data[processed_data.length - 1].value /
-        processed_data[0].value -
-      1;
+    growth = calculateGrowth(
+      processed_data[0].value,
+      processed_data[processed_data.length - 1].value
+    );
+    endValue = investedAmount * (1 + growth);
+    nominalReturnVal = endValue / investedAmount - 1;
     realReturn = (1 + nominalReturnVal) / cumulativeInflation - 1;
     return realReturn;
   }
 
-  function updateRealReturnDisplay(processed_data, filteredData_inflation) {
+  function updateRealReturnDisplay(
+    investedAmount,
+    processed_data,
+    filteredData_inflation
+  ) {
     spInvestRealReturn.textContent = `${calculateRealReturn(
       processed_data,
       filteredData_inflation
@@ -260,7 +266,11 @@ window.addEventListener("DOMContentLoaded", () => {
             filteredData[filteredData.length - 1].value
           );
 
-          updateRealReturnDisplay(filteredData, filteredData_inflation);
+          updateRealReturnDisplay(
+            investedAmount,
+            filteredData,
+            filteredData_inflation
+          );
           updateInvestmentReturn(investedAmount, overall_growth);
           updateDurationDisplay(startMonth, startYear, endMonth, endYear);
           highlightSelectedRange(filteredData, overall_growth);
@@ -289,7 +299,11 @@ window.addEventListener("DOMContentLoaded", () => {
             filteredData[0].value,
             filteredData[filteredData.length - 1].value
           );
-          updateRealReturnDisplay(filteredData, filteredData_inflation);
+          updateRealReturnDisplay(
+            investedAmount,
+            filteredData,
+            filteredData_inflation
+          );
           updateDurationDisplay(startMonth, startYear, endMonth, endYear);
           updateInvestmentReturn(investedAmount, overall_growth);
           highlightSelectedRange(filteredData, overall_growth);
@@ -318,7 +332,11 @@ window.addEventListener("DOMContentLoaded", () => {
             filteredData[0].value,
             filteredData[filteredData.length - 1].value
           );
-          updateRealReturnDisplay(filteredData, filteredData_inflation);
+          updateRealReturnDisplay(
+            investedAmount,
+            filteredData,
+            filteredData_inflation
+          );
           updateDurationDisplay(startMonth, startYear, endMonth, endYear);
           updateInvestmentReturn(investedAmount, overall_growth);
           highlightSelectedRange(filteredData, overall_growth);
@@ -347,7 +365,11 @@ window.addEventListener("DOMContentLoaded", () => {
             filteredData[0].value,
             filteredData[filteredData.length - 1].value
           );
-          updateRealReturnDisplay(filteredData, filteredData_inflation);
+          updateRealReturnDisplay(
+            investedAmount,
+            filteredData,
+            filteredData_inflation
+          );
           updateDurationDisplay(startMonth, startYear, endMonth, endYear);
           updateInvestmentReturn(investedAmount, overall_growth);
           highlightSelectedRange(filteredData, overall_growth);
@@ -358,7 +380,11 @@ window.addEventListener("DOMContentLoaded", () => {
           let investmentAmount = parseFloat(event.target.value);
           investedAmount = investmentAmount;
           updateInvestmentReturn(investedAmount, overall_growth);
-          updateRealReturnDisplay(filteredData, filteredData_inflation);
+          updateRealReturnDisplay(
+            investedAmount,
+            filteredData,
+            filteredData_inflation
+          );
         });
       });
     });
