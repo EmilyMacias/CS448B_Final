@@ -203,14 +203,13 @@ window.addEventListener("DOMContentLoaded", () => {
     const cumulativeInflation = calculateCumulativeInflation(
       filteredData_inflation
     );
-    // Real return = (1 / cumulativeInflation - 1) * 100
-    // This represents how much purchasing power was lost
-    const realReturn = (1 / cumulativeInflation - 1) * 100;
-    const purchasingPowerLoss = Math.abs(realReturn);
-    notInvestingMessage.textContent = `Your original amount has decreased significantly in value due to inflation. Over this time period, inflation has reduced your purchasing power. This means that your original amount now has ${purchasingPowerLoss.toFixed(
+
+    notInvestingMessage.textContent = `Your original amount has decreased significantly in value due to inflation. Over this time period, inflation has reduced your purchasing power. This means that your original amount now has ${cumulativeInflation.toFixed(
       2
     )}% less purchasing power.`;
-    noInvestRealReturn.textContent = `${realReturn.toFixed(2)} % real return`;
+    noInvestRealReturn.textContent = `${cumulativeInflation.toFixed(
+      2
+    )} % real return`;
   }
 
   // calculate HYSA return
