@@ -1,6 +1,6 @@
 // define functions
 function plotChart(housing_data) {
-  console.log(processed_data);
+  console.log(housing_data);
   const trace = {
     x: processed_data.map((d) => d.date),
     y: processed_data.map((d) => d.value),
