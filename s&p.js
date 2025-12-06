@@ -24,6 +24,7 @@ window.addEventListener("DOMContentLoaded", () => {
   let endYear = 2024;
   let overall_growth = 0;
   let filteredData = [];
+  let filteredData_inflation = [];
 
   // define functions
   function plotChart(processed_data, inflation_data) {
