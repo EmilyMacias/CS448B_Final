@@ -102,6 +102,14 @@ window.addEventListener("DOMContentLoaded", () => {
     if (isNaN(investedAmount) || investedAmount === 0) {
       return 0;
     }
+    if (
+      !processed_data ||
+      processed_data.length === 0 ||
+      !filteredData_inflation ||
+      filteredData_inflation.length === 0
+    ) {
+      return 0;
+    }
     cumulativeInflation = calculateCumulativeInflation(filteredData_inflation);
     growth = calculateGrowth(
       processed_data[0].value,
@@ -155,8 +163,6 @@ window.addEventListener("DOMContentLoaded", () => {
       addAmount.style.color = "green";
       returnsBox.style.backgroundColor = "rgba(200, 255, 200, 0.4)";
       notReturnsBox.style.backgroundColor = "rgba(255, 200, 200, 0.4)";
-      investingMessage.textContent =
-        "Your investment has grown over time. You not only matched, but beat inflation, so your money has grown in value. More purchasing power for the win!";
     } else if (!checkGrowth(investedAmount, grownAmount)) {
       returnsBox.style.backgroundColor = "rgba(255, 200, 200, 0.4)";
       notReturnsBox.style.backgroundColor = "rgba(255, 200, 200, 0.4)";
@@ -164,10 +170,6 @@ window.addEventListener("DOMContentLoaded", () => {
     }
 
     notInvest.textContent = investedAmount.toLocaleString();
-    notInvestingMessage.textContent =
-      "Your original " +
-      investedAmount.toLocaleString() +
-      " has decreased significantly in value due to inflation";
   }
 
   // filter data
