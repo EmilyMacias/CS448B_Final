@@ -427,12 +427,15 @@
                 <span class="emphasis-text" id="no_invest">0</span>
               </label>
               <div class="vertical-divider"></div>
-              <span class="emphasis-text">0 % real return</span>
+              <span id="no_invest_real_return" class="emphasis-text"
+                >0 % real return</span
+              >
             </div>
 
             <br />
             <p id="not_investing_message"></p>
           </div>
+          <!-- HYSA -->
           <div id="hysa" style="display: flex; flex-direction: column">
             <h3><u>HYSA</u></h3>
             <label>
@@ -447,25 +450,22 @@
             <br />
             <p id="not_investing_message"></p>
           </div>
+          <!-- S&P Investing -->
           <div id="returns" style="display: flex; flex-direction: column">
             <h3><u>S&P Investing</u></h3>
-            <label>
-              <span class="emphasis-text">$</span>
-              <span class="emphasis-text" id="investment_return_amount">0</span>
-              <span id="investment_add_amount">(+0)</span>
-            </label>
-            <br />
-            <label>
-              Nominal Return:
-              <span id="nominal_return">0</span>
-            </label>
-            <br />
-            <label>
-              Cumulative Inflation:
-              <span id="cumulative_inflation">0</span>
-            </label>
-            <br />
-            <p id="investing_message"></p>
+            <div class="horizontal-side-panel-amounts">
+              <label>
+                <span class="emphasis-text">$</span>
+                <span class="emphasis-text" id="investment_return_amount"
+                  >0</span
+                >
+                <span id="investment_add_amount">(+0)</span>
+              </label>
+              <div class="vertical-divider"></div>
+              <span id="S&P_invest_real_return" class="emphasis-text"
+                >0 % real return</span
+              >
+            </div>
           </div>
         </div>
       </div>
