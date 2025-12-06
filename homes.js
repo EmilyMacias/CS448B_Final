@@ -1,10 +1,6 @@
 // define functions
-function plotChart(housing_data) {
-  console.log(housing_data);
-  const processed_data = housing_data.map((d) => ({
-    date: d.observation_date,
-    value: +d.MSPUS,
-  }));
+function plotChart(processed_data) {
+  console.log(processed_data);
 
   const trace = {
     x: processed_data.map((d) => d.date),
@@ -27,5 +23,10 @@ function plotChart(housing_data) {
 
 // loading data and executing main logic
 d3.csv("MSPUS.csv").then((data) => {
-  plotChart(data);
+  const processed_data = housing_data.map((d) => ({
+    date: d.observation_date,
+    value: +d.MSPUS,
+  }));
+
+  plotChart(processed_data);
 });
