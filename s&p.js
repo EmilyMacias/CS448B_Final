@@ -20,6 +20,9 @@ window.addEventListener("DOMContentLoaded", () => {
     "hysa_invest_real_return"
   );
   const hysaBox = document.getElementById("hysa");
+  const hysaMessage = document.getElementById("hysa_message");
+  const investingMessage = document.getElementById("investing_message");
+  const notInvestingMessage = document.getElementById("not_investing_message");
   const HYSA_ANNUAL_RATE = 0.042; // 4.2% annual rate
   let investedAmount = 0;
   let startMonth = 1;
@@ -131,11 +134,25 @@ window.addEventListener("DOMContentLoaded", () => {
     processed_data,
     filteredData_inflation
   ) {
-    spInvestRealReturn.textContent = `${calculateRealReturn(
+    const realReturn = calculateRealReturn(
       investedAmount,
       processed_data,
       filteredData_inflation
-    ).toFixed(2)} % real return`;
+    );
+    spInvestRealReturn.textContent = `${realReturn.toFixed(2)} % real return`;
+    if (realReturn > 0) {
+      investingMessage.textContent = `Your investment has grown over time. You not only matched, but beat inflation, so your money has grown in value by ${realReturn.toFixed(
+        2
+      )}% in real terms. More purchasing power for the win!`;
+    } else if (realReturn < 0) {
+      investingMessage.textContent = `Your investment has not kept up with inflation. Your money has decreased in value by ${Math.abs(
+        realReturn
+      ).toFixed(
+        2
+      )}% in real terms, meaning you have less purchasing power than when you started.`;
+    } else {
+      investingMessage.textContent = `Your investment has kept pace with inflation. Your money has maintained its purchasing power, but hasn't grown in real terms.`;
+    }
   }
 
   // update duration display
@@ -150,11 +167,16 @@ window.addEventListener("DOMContentLoaded", () => {
   }
 
   // update investment return display
-  function updateInvestmentReturn(investedAmount, overall_growth) {
+  function updateInvestmentReturn(
+    investedAmount,
+    overall_growth,
+    filteredData_inflation
+  ) {
     if (isNaN(investedAmount) || investedAmount === 0) {
       addAmount.textContent = "(+$0)";
       notInvest.textContent = "0";
       investmentOutput.textContent = "0.00";
+      investingMessage.textContent = "";
       return;
     }
     const grownAmount = investedAmount + investedAmount * overall_growth;
@@ -177,6 +199,14 @@ window.addEventListener("DOMContentLoaded", () => {
     }
 
     notInvest.textContent = investedAmount.toLocaleString();
+    const cumulativeInflation = calculateCumulativeInflation(
+      filteredData_inflation
+    );
+    notInvestingMessage.textContent = `Your original ${investedAmount.toLocaleString()} has decreased significantly in value due to inflation. Over this time period, inflation has reduced your purchasing power by ${inflationPercentage.toFixed(
+      2
+    )}%. This means what you could buy with your original amount is now worth ${(
+      cumulativeInflation * 100
+    ).toFixed(2)}% of that original amount.`;
   }
 
   // calculate HYSA return
@@ -283,6 +313,9 @@ window.addEventListener("DOMContentLoaded", () => {
       filteredData_inflation
     );
     hysaInvestRealReturn.textContent = `${realReturn.toFixed(2)} % real return`;
+    hysaMessage.textContent = `Your HYSA investment has grown over time. You not only matched, but beat inflation, so your money has grown in value by ${realReturn.toFixed(
+      2
+    )}% in real terms. More purchasing power for the win!`;
   }
 
   // filter data
@@ -387,7 +420,11 @@ window.addEventListener("DOMContentLoaded", () => {
           filteredData,
           filteredData_inflation
         );
-        updateInvestmentReturn(investedAmount, overall_growth);
+        updateInvestmentReturn(
+          investedAmount,
+          overall_growth,
+          filteredData_inflation
+        );
         updateHYSAReturnDisplay(
           investedAmount,
           startMonth,
@@ -431,7 +468,11 @@ window.addEventListener("DOMContentLoaded", () => {
             filteredData,
             filteredData_inflation
           );
-          updateInvestmentReturn(investedAmount, overall_growth);
+          updateInvestmentReturn(
+            investedAmount,
+            overall_growth,
+            filteredData_inflation
+          );
           updateHYSAReturnDisplay(
             investedAmount,
             startMonth,
@@ -473,7 +514,11 @@ window.addEventListener("DOMContentLoaded", () => {
             filteredData_inflation
           );
           updateDurationDisplay(startMonth, startYear, endMonth, endYear);
-          updateInvestmentReturn(investedAmount, overall_growth);
+          updateInvestmentReturn(
+            investedAmount,
+            overall_growth,
+            filteredData_inflation
+          );
           updateHYSAReturnDisplay(
             investedAmount,
             startMonth,
@@ -514,7 +559,11 @@ window.addEventListener("DOMContentLoaded", () => {
             filteredData_inflation
           );
           updateDurationDisplay(startMonth, startYear, endMonth, endYear);
-          updateInvestmentReturn(investedAmount, overall_growth);
+          updateInvestmentReturn(
+            investedAmount,
+            overall_growth,
+            filteredData_inflation
+          );
           updateHYSAReturnDisplay(
             investedAmount,
             startMonth,
@@ -555,7 +604,11 @@ window.addEventListener("DOMContentLoaded", () => {
             filteredData_inflation
           );
           updateDurationDisplay(startMonth, startYear, endMonth, endYear);
-          updateInvestmentReturn(investedAmount, overall_growth);
+          updateInvestmentReturn(
+            investedAmount,
+            overall_growth,
+            filteredData_inflation
+          );
           updateHYSAReturnDisplay(
             investedAmount,
             startMonth,
@@ -571,7 +624,11 @@ window.addEventListener("DOMContentLoaded", () => {
         investmentInput.addEventListener("input", (event) => {
           let investmentAmount = parseFloat(event.target.value);
           investedAmount = investmentAmount;
-          updateInvestmentReturn(investedAmount, overall_growth);
+          updateInvestmentReturn(
+            investedAmount,
+            overall_growth,
+            filteredData_inflation
+          );
           updateRealReturnDisplay(
             investedAmount,
             filteredData,
