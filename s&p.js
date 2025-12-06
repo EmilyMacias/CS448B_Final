@@ -112,6 +112,7 @@ window.addEventListener("DOMContentLoaded", () => {
     filteredData_inflation
   ) {
     spInvestRealReturn.textContent = `${calculateRealReturn(
+      investedAmount,
       processed_data,
       filteredData_inflation
     ).toFixed(2)} % real return`;
@@ -235,7 +236,11 @@ window.addEventListener("DOMContentLoaded", () => {
           processed_data[processed_data.length - 1].value
         );
 
-        updateRealReturnDisplay(processed_data, yearly_processed_inflation);
+        updateRealReturnDisplay(
+          investedAmount,
+          processed_data,
+          yearly_processed_inflation
+        );
         updateDurationDisplay(startMonth, startYear, endMonth, endYear);
         highlightSelectedRange(yearly_processed, overall_growth);
         investmentEndYear.value = endYear;
