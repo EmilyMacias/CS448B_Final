@@ -116,7 +116,7 @@ window.addEventListener("DOMContentLoaded", () => {
     endValue = investedAmount * (1 + growth);
     nominalReturnVal = endValue / investedAmount - 1;
     realReturn = (1 + nominalReturnVal) / cumulativeInflation - 1;
-    return realReturn;
+    return realReturn * 100;
   }
 
   function updateRealReturnDisplay(
