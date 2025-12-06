@@ -208,7 +208,9 @@ window.addEventListener("DOMContentLoaded", () => {
     notInvestingMessage.textContent = `Your original amount has decreased significantly in value due to inflation. Over this time period, inflation has reduced your purchasing power. This means that your original amount now has ${purchasingPower.toFixed(
       2
     )}% less purchasing power.`;
-    noInvestRealReturn.textContent = `${realReturn.toFixed(2)} % real return`;
+    noInvestRealReturn.textContent = `${purchasingPower.toFixed(
+      2
+    )} % real return`;
   }
 
   // calculate HYSA return
