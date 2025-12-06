@@ -1,6 +1,11 @@
 // define functions
 function plotChart(housing_data) {
   console.log(housing_data);
+  const processed_data = housing_data.map((d) => ({
+    date: d.observation_date,
+    value: +d.MSPUS,
+  }));
+
   const trace = {
     x: processed_data.map((d) => d.date),
     y: processed_data.map((d) => d.value),
@@ -17,7 +22,7 @@ function plotChart(housing_data) {
     autosize: true,
   };
 
-  Plotly.newPlot("chart", [trace], layout);
+  Plotly.newPlot("homes_chart", [trace], layout);
 }
 
 // loading data and executing main logic

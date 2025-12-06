@@ -82,6 +82,22 @@
         background-color: #8f8888;
         flex-shrink: 0;
       }
+      .buy-home-button {
+        padding: 10px 20px;
+        background-color: white;
+        border: 1px solid #ccc;
+        cursor: pointer;
+        margin: 5px;
+      }
+      .buy-home-button:hover {
+        background-color: #e0e0e0;
+      }
+      .buy-home-button img {
+        width: 20px;
+        height: 20px;
+        margin-right: 8px;
+        vertical-align: middle;
+      }
     </style>
   </head>
   <body>
@@ -520,8 +536,18 @@
         great-grandparents buying and selling homes, how does it help them build
         wealth?
       </p>
-      <div id="chart"><script src="homes.js"></script></div>
-      <button id="buy_home">Buy Home</button>
+      <div id="homes_chart"><script src="homes.js"></script></div>
+      <button id="buy_regular_home" class="buy-home-button">
+        <img src="noun-two-story-house-4242526.png" alt="Two-story house" />
+        Buy Home at Median Price
+      </button>
+      <button id="buy_expensive_home" class="buy-home-button">
+        <img src="noun-three-story-house-4242446.png" alt="Three-story house" />
+        Buy Home at 2x Median Price
+      </button>
+      <button id="buy_very_expensive_home" class="buy-home-button">
+        Buy Home at 3x Median Price
+      </button>
     </div>
   </body>
 </html>
