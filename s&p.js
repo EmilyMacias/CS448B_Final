@@ -19,6 +19,7 @@ window.addEventListener("DOMContentLoaded", () => {
   const hysaInvestRealReturn = document.getElementById(
     "hysa_invest_real_return"
   );
+  const hysaBox = document.getElementById("hysa");
   const HYSA_ANNUAL_RATE = 0.042; // 4.2% annual rate
   let investedAmount = 0;
   let startMonth = 1;
@@ -247,6 +248,7 @@ window.addEventListener("DOMContentLoaded", () => {
       hysaReturnAmount.textContent = "0";
       hysaAddAmount.textContent = "(+$0)";
       hysaInvestRealReturn.textContent = "0.00 % real return";
+      hysaBox.style.backgroundColor = "#ececec";
       return;
     }
     const finalAmount = calculateHYSAReturn(
@@ -269,8 +271,7 @@ window.addEventListener("DOMContentLoaded", () => {
 
     if (difference >= 0) {
       hysaAddAmount.style.color = "green";
-    } else {
-      hysaAddAmount.style.color = "red";
+      hysaBox.style.backgroundColor = "rgba(200, 255, 200, 0.4)";
     }
 
     const realReturn = calculateHYSARealReturn(
