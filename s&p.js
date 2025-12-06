@@ -94,7 +94,11 @@ window.addEventListener("DOMContentLoaded", () => {
     return cumulativeInflation;
   }
 
-  function calculateRealReturn(processed_data, filteredData_inflation) {
+  function calculateRealReturn(
+    investedAmount,
+    processed_data,
+    filteredData_inflation
+  ) {
     cumulativeInflation = calculateCumulativeInflation(filteredData_inflation);
     growth = calculateGrowth(
       processed_data[0].value,
