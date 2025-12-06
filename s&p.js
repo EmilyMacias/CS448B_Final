@@ -14,6 +14,12 @@ window.addEventListener("DOMContentLoaded", () => {
   const returnsBox = document.getElementById("returns");
   const notReturnsBox = document.getElementById("not_returns");
   const spInvestRealReturn = document.getElementById("S&P_invest_real_return");
+  const hysaReturnAmount = document.getElementById("hysa_return_amount");
+  const hysaAddAmount = document.getElementById("hysa_add_amount");
+  const hysaInvestRealReturn = document.getElementById(
+    "hysa_invest_real_return"
+  );
+  const HYSA_ANNUAL_RATE = 0.042; // 4.2% annual rate
   let investedAmount = 0;
   let startMonth = 1;
   let startYear = 1928;
@@ -172,6 +178,112 @@ window.addEventListener("DOMContentLoaded", () => {
     notInvest.textContent = investedAmount.toLocaleString();
   }
 
+  // calculate HYSA return
+  function calculateHYSAReturn(
+    investedAmount,
+    start_month,
+    start_year,
+    end_month,
+    end_year
+  ) {
+    if (isNaN(investedAmount) || investedAmount === 0) {
+      return 0;
+    }
+    const duration = calculateDuration(
+      start_month,
+      start_year,
+      end_month,
+      end_year
+    );
+    const totalYears = duration.years + duration.months / 12;
+    // Compound interest: A = P(1 + r)^t
+    const finalAmount =
+      investedAmount * Math.pow(1 + HYSA_ANNUAL_RATE, totalYears);
+    return finalAmount;
+  }
+
+  // calculate HYSA real return
+  function calculateHYSARealReturn(
+    investedAmount,
+    start_month,
+    start_year,
+    end_month,
+    end_year,
+    filteredData_inflation
+  ) {
+    if (isNaN(investedAmount) || investedAmount === 0) {
+      return 0;
+    }
+    if (!filteredData_inflation || filteredData_inflation.length === 0) {
+      return 0;
+    }
+    const cumulativeInflation = calculateCumulativeInflation(
+      filteredData_inflation
+    );
+    const duration = calculateDuration(
+      start_month,
+      start_year,
+      end_month,
+      end_year
+    );
+    const totalYears = duration.years + duration.months / 12;
+    const finalAmount =
+      investedAmount * Math.pow(1 + HYSA_ANNUAL_RATE, totalYears);
+    const nominalReturnVal = finalAmount / investedAmount - 1;
+    const realReturn = (1 + nominalReturnVal) / cumulativeInflation - 1;
+    return realReturn * 100;
+  }
+
+  // update HYSA return display
+  function updateHYSAReturnDisplay(
+    investedAmount,
+    start_month,
+    start_year,
+    end_month,
+    end_year,
+    filteredData_inflation
+  ) {
+    if (isNaN(investedAmount) || investedAmount === 0) {
+      hysaReturnAmount.textContent = "0";
+      hysaAddAmount.textContent = "(+$0)";
+      hysaInvestRealReturn.textContent = "0.00 % real return";
+      return;
+    }
+    const finalAmount = calculateHYSAReturn(
+      investedAmount,
+      start_month,
+      start_year,
+      end_month,
+      end_year
+    );
+    hysaReturnAmount.textContent = finalAmount.toLocaleString(undefined, {
+      maximumFractionDigits: 2,
+    });
+
+    const difference = finalAmount - investedAmount;
+    const sign = difference >= 0 ? "+" : "-";
+    hysaAddAmount.textContent = `(${sign}$${Math.abs(difference).toLocaleString(
+      undefined,
+      { maximumFractionDigits: 2 }
+    )})`;
+
+    if (difference >= 0) {
+      hysaAddAmount.style.color = "green";
+    } else {
+      hysaAddAmount.style.color = "red";
+    }
+
+    const realReturn = calculateHYSARealReturn(
+      investedAmount,
+      start_month,
+      start_year,
+      end_month,
+      end_year,
+      filteredData_inflation
+    );
+    hysaInvestRealReturn.textContent = `${realReturn.toFixed(2)} % real return`;
+  }
+
   // filter data
   function filterData(data, start_month, start_year, end_month, end_year) {
     return data.filter((d) => {
@@ -275,6 +387,14 @@ window.addEventListener("DOMContentLoaded", () => {
           filteredData_inflation
         );
         updateInvestmentReturn(investedAmount, overall_growth);
+        updateHYSAReturnDisplay(
+          investedAmount,
+          startMonth,
+          startYear,
+          endMonth,
+          endYear,
+          filteredData_inflation
+        );
         updateDurationDisplay(startMonth, startYear, endMonth, endYear);
         highlightSelectedRange(yearly_processed, overall_growth);
         investmentEndYear.value = endYear;
@@ -311,6 +431,14 @@ window.addEventListener("DOMContentLoaded", () => {
             filteredData_inflation
           );
           updateInvestmentReturn(investedAmount, overall_growth);
+          updateHYSAReturnDisplay(
+            investedAmount,
+            startMonth,
+            startYear,
+            endMonth,
+            endYear,
+            filteredData_inflation
+          );
           updateDurationDisplay(startMonth, startYear, endMonth, endYear);
           highlightSelectedRange(filteredData, overall_growth);
         });
@@ -345,6 +473,14 @@ window.addEventListener("DOMContentLoaded", () => {
           );
           updateDurationDisplay(startMonth, startYear, endMonth, endYear);
           updateInvestmentReturn(investedAmount, overall_growth);
+          updateHYSAReturnDisplay(
+            investedAmount,
+            startMonth,
+            startYear,
+            endMonth,
+            endYear,
+            filteredData_inflation
+          );
           highlightSelectedRange(filteredData, overall_growth);
         });
 
@@ -378,6 +514,14 @@ window.addEventListener("DOMContentLoaded", () => {
           );
           updateDurationDisplay(startMonth, startYear, endMonth, endYear);
           updateInvestmentReturn(investedAmount, overall_growth);
+          updateHYSAReturnDisplay(
+            investedAmount,
+            startMonth,
+            startYear,
+            endMonth,
+            endYear,
+            filteredData_inflation
+          );
           highlightSelectedRange(filteredData, overall_growth);
         });
 
@@ -411,6 +555,14 @@ window.addEventListener("DOMContentLoaded", () => {
           );
           updateDurationDisplay(startMonth, startYear, endMonth, endYear);
           updateInvestmentReturn(investedAmount, overall_growth);
+          updateHYSAReturnDisplay(
+            investedAmount,
+            startMonth,
+            startYear,
+            endMonth,
+            endYear,
+            filteredData_inflation
+          );
           highlightSelectedRange(filteredData, overall_growth);
         });
 
@@ -422,6 +574,14 @@ window.addEventListener("DOMContentLoaded", () => {
           updateRealReturnDisplay(
             investedAmount,
             filteredData,
+            filteredData_inflation
+          );
+          updateHYSAReturnDisplay(
+            investedAmount,
+            startMonth,
+            startYear,
+            endMonth,
+            endYear,
             filteredData_inflation
           );
         });
