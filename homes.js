@@ -189,6 +189,9 @@ function createChart() {
     .attr("rx", 5);
 
   updateTooltip(sellTooltip, sellDate, sellPrice);
+
+  // Update cost displays
+  updateCostDisplays();
 }
 
 // Format tooltip text
@@ -274,6 +277,9 @@ function dragged(event) {
       .attr("y", yScale(sellPrice) - 85);
     updateTooltip(sellTooltip, sellDate, sellPrice);
   }
+
+  // Update cost displays
+  updateCostDisplays();
 }
 
 function dragEnded(event) {
@@ -286,4 +292,33 @@ function findClosestPoint(targetDate) {
     const closestDiff = Math.abs(targetDate - closest.date);
     return diff < closestDiff ? d : closest;
   });
+}
+
+// Update cost displays for each house type
+function updateCostDisplays() {
+  if (!buyPrice) return;
+
+  // Calculate costs for each house type
+  const regularCost = buyPrice;
+  const expensiveCost = buyPrice * 2;
+  const veryExpensiveCost = buyPrice * 3;
+
+  // Format and display
+  const formatCost = (cost) => d3.format("$,.0f")(cost);
+
+  const regularEl = document.getElementById("regular_home_cost");
+  const expensiveEl = document.getElementById("expensive_home_cost");
+  const veryExpensiveEl = document.getElementById("very_expensive_home_cost");
+
+  if (regularEl) {
+    regularEl.textContent = formatCost(regularCost);
+  }
+
+  if (expensiveEl) {
+    expensiveEl.textContent = formatCost(expensiveCost);
+  }
+
+  if (veryExpensiveEl) {
+    veryExpensiveEl.textContent = formatCost(veryExpensiveCost);
+  }
 }
