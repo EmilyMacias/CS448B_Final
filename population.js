@@ -27,12 +27,12 @@ d3.csv("population_filtered_by_investment.csv").then((data) => {
     };
 
     const genderRadio = document.querySelector('input[name="gender"]:checked');
-    if (genderRadio) filters.gender.push(genderRadio.value);
+    if (genderRadio) filters.gender.push(+genderRadio.value);
 
     for (let i = 1; i <= 6; i++) {
       const ageRadio = document.querySelector(`input[name="age${i}"]:checked`);
       if (ageRadio) {
-        filters.age.push(ageRadio.value);
+        filters.age.push(+ageRadio.value);
         break;
       }
     }
@@ -42,7 +42,7 @@ d3.csv("population_filtered_by_investment.csv").then((data) => {
         `input[name="ethnicity${i}"]:checked`
       );
       if (ethnicityRadio) {
-        filters.ethnicity.push(ethnicityRadio.value);
+        filters.ethnicity.push(+ethnicityRadio.value);
         break;
       }
     }
@@ -52,7 +52,7 @@ d3.csv("population_filtered_by_investment.csv").then((data) => {
         `input[name="education${i}"]:checked`
       );
       if (educationRadio) {
-        filters.education.push(educationRadio.value);
+        filters.education.push(+educationRadio.value);
         break;
       }
     }
