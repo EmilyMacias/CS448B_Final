@@ -26,21 +26,21 @@ d3.csv("population_filtered_by_investment.csv").then((data) => {
   // Function to get selected filter values
   function getSelectedFilters() {
     const filters = {
-      gender: null,
-      age: null,
-      ethnicity: null,
-      education: null,
+      gender: [],
+      age: [],
+      ethnicity: [],
+      education: [],
     };
 
     // Get gender selection
     const genderRadio = document.querySelector('input[name="gender"]:checked');
-    if (genderRadio) filters.gender = genderRadio.value;
+    if (genderRadio) filters.gender.push(genderRadio.value);
 
     // Get age selection (check all age radio buttons)
     for (let i = 1; i <= 6; i++) {
       const ageRadio = document.querySelector(`input[name="age${i}"]:checked`);
       if (ageRadio) {
-        filters.age = ageRadio.value;
+        filters.age.push(ageRadio.value);
         break;
       }
     }
@@ -51,7 +51,7 @@ d3.csv("population_filtered_by_investment.csv").then((data) => {
         `input[name="ethnicity${i}"]:checked`
       );
       if (ethnicityRadio) {
-        filters.ethnicity = ethnicityRadio.value;
+        filters.ethnicity.push(ethnicityRadio.value);
         break;
       }
     }
@@ -62,7 +62,7 @@ d3.csv("population_filtered_by_investment.csv").then((data) => {
         `input[name="education${i}"]:checked`
       );
       if (educationRadio) {
-        filters.education = educationRadio.value;
+        filters.education.push(educationRadio.value);
         break;
       }
     }
@@ -74,34 +74,29 @@ d3.csv("population_filtered_by_investment.csv").then((data) => {
   function matchesFilters(d, filters) {
     // If no filters are selected, everything matches (all red)
     const hasAnyFilter =
-      filters.gender !== null ||
-      filters.age !== null ||
-      filters.education !== null ||
-      filters.ethnicity !== null;
+      filters.gender.length > 0 ||
+      filters.age.length > 0 ||
+      filters.ethnicity.length > 0 ||
+      filters.education.length > 0;
 
     if (!hasAnyFilter) {
       return true;
     }
 
     // Gender filter (A50A)
-    if (filters.gender !== null && d.A50A !== +filters.gender) {
+    if (filters.gender.length > 0 && !filters.gender.includes(d.A50A)) {
       return false;
     }
 
     // Age filter (A50B)
-    if (filters.age !== null && d.A50B !== +filters.age) {
+    if (filters.age.length > 0 && !filters.age.includes(d.A50B)) {
       return false;
     }
 
     // Education filter (A41)
-    if (filters.education !== null && d.A41 !== +filters.education) {
+    if (filters.education.length > 0 && !filters.education.includes(d.A41)) {
       return false;
     }
-
-    // Ethnicity filter - not available in current CSV
-    // if (filters.ethnicity !== null && d.A41 !== +filters.ethnicity) {
-    //   return false;
-    // }
 
     return true;
   }
@@ -141,22 +136,15 @@ d3.csv("population_filtered_by_investment.csv").then((data) => {
   setTimeout(() => {
     const allRadioButtons = document.querySelectorAll('input[type="radio"]');
     allRadioButtons.forEach((radio) => {
-      // Store previous checked state for toggle functionality
       let wasChecked = false;
 
       radio.addEventListener("mousedown", (e) => {
-        wasChecked = radio.checked;
-      });
-
-      radio.addEventListener("click", (e) => {
-        // If clicking an already selected radio, deselect it after a brief delay
         if (wasChecked) {
-          setTimeout(() => {
-            if (radio.checked) {
-              radio.checked = false;
-              updateColors();
-            }
-          }, 0);
+          radio.checked = false;
+          updateColors();
+        } else {
+          radio.checked = true;
+          updateColors();
         }
       });
 
@@ -165,7 +153,6 @@ d3.csv("population_filtered_by_investment.csv").then((data) => {
       });
     });
 
-    // Initial update - show all as red when no filters are selected
     updateColors();
   }, 100);
 
