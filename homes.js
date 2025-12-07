@@ -250,7 +250,7 @@ function dragged(event) {
       "transform",
       `translate(${xScale(buyDate)},${yScale(buyPrice)})`
     );
-    buyText.attr("x", xScale(buyDate)).attr("y", yScale(buyPrice) + 25);
+    buyText.attr("x", xScale(buyDate)).attr("y", yScale(buyPrice) - 25);
 
     // Update buy tooltip
     buyTooltip
@@ -265,7 +265,7 @@ function dragged(event) {
       "transform",
       `translate(${xScale(sellDate)},${yScale(sellPrice)})`
     );
-    sellText.attr("x", xScale(sellDate)).attr("y", yScale(sellPrice) + 25);
+    sellText.attr("x", xScale(sellDate)).attr("y", yScale(sellPrice) - 25);
 
     // Update sell tooltip
     sellTooltip
