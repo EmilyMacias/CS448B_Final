@@ -15,7 +15,6 @@ d3.csv("MSPUS.csv").then((data) => {
     value: +d.MSPUS,
   }));
 
-  // Set initial buy and sell positions
   buyDate = processedData[0].date;
   buyPrice = processedData[0].value;
   const midIndex = Math.floor(processedData.length / 2);
@@ -26,15 +25,12 @@ d3.csv("MSPUS.csv").then((data) => {
 });
 
 function createChart() {
-  // Clear existing chart
   d3.select("#homes_chart").selectAll("*").remove();
 
-  // Set up dimensions
   const margin = { top: 40, right: 40, bottom: 60, left: 80 };
   const width = 800 - margin.left - margin.right;
   const height = 500 - margin.top - margin.bottom;
 
-  // Create SVG
   svg = d3
     .select("#homes_chart")
     .append("svg")
@@ -45,7 +41,6 @@ function createChart() {
     .append("g")
     .attr("transform", `translate(${margin.left},${margin.top})`);
 
-  // Create scales
   xScale = d3
     .scaleTime()
     .domain(d3.extent(processedData, (d) => d.date))
@@ -57,14 +52,12 @@ function createChart() {
     .nice()
     .range([height, 0]);
 
-  // Create line generator
   line = d3
     .line()
     .x((d) => xScale(d.date))
     .y((d) => yScale(d.value))
     .curve(d3.curveMonotoneX);
 
-  // Add axes
   g.append("g")
     .attr("transform", `translate(0,${height})`)
     .call(d3.axisBottom(xScale))
@@ -85,7 +78,6 @@ function createChart() {
     .style("text-anchor", "middle")
     .text("Price in USD");
 
-  // Add title
   g.append("text")
     .attr("x", width / 2)
     .attr("y", -10)
@@ -94,7 +86,6 @@ function createChart() {
     .style("font-weight", "bold")
     .text("Median Housing Prices in the US Over Time");
 
-  // Draw the line
   g.append("path")
     .datum(processedData)
     .attr("fill", "none")
@@ -102,7 +93,6 @@ function createChart() {
     .attr("stroke-width", 2)
     .attr("d", line);
 
-  // Create buy marker (green star)
   const buyGroup = g.append("g").attr("class", "buy-marker");
   buyMarker = buyGroup
     .append("path")
@@ -130,7 +120,6 @@ function createChart() {
     .style("font-weight", "bold")
     .text("Buy");
 
-  // Buy tooltip
   buyTooltip = buyGroup.append("g").attr("class", "buy-tooltip");
 
   buyTooltip
@@ -146,7 +135,6 @@ function createChart() {
 
   updateTooltip(buyTooltip, buyDate, buyPrice);
 
-  // Create sell marker (red star)
   const sellGroup = g.append("g").attr("class", "sell-marker");
   sellMarker = sellGroup
     .append("path")
@@ -174,7 +162,6 @@ function createChart() {
     .style("font-weight", "bold")
     .text("Sell");
 
-  // Sell tooltip
   sellTooltip = sellGroup.append("g").attr("class", "sell-tooltip");
 
   sellTooltip
@@ -190,18 +177,15 @@ function createChart() {
 
   updateTooltip(sellTooltip, sellDate, sellPrice);
 
-  // Update cost displays
   updateCostDisplays();
 }
 
-// Format tooltip text
 function formatTooltip(date, price) {
   const dateStr = d3.timeFormat("%Y-%m-%d")(date);
   const priceStr = d3.format("$,.0f")(price);
   return `${dateStr}\n${priceStr}`;
 }
 
-// Update tooltip with line breaks
 function updateTooltip(tooltip, date, price) {
   const dateStr = d3.timeFormat("%Y-%m-%d")(date);
   const priceStr = d3.format("$,.0f")(price);
@@ -236,14 +220,11 @@ function dragged(event) {
   const x = event.x;
   const y = event.y;
 
-  // Convert pixel coordinates to data coordinates
   const date = xScale.invert(x);
   const price = yScale.invert(y);
 
-  // Find closest data point
   const closest = findClosestPoint(date);
 
-  // Determine which marker is being dragged
   const isBuy = d3.select(this).attr("fill") === "green";
 
   if (isBuy) {
@@ -255,7 +236,6 @@ function dragged(event) {
     );
     buyText.attr("x", xScale(buyDate)).attr("y", yScale(buyPrice) - 25);
 
-    // Update buy tooltip
     buyTooltip
       .select("rect")
       .attr("x", xScale(buyDate) - 85)
@@ -270,7 +250,6 @@ function dragged(event) {
     );
     sellText.attr("x", xScale(sellDate)).attr("y", yScale(sellPrice) - 25);
 
-    // Update sell tooltip
     sellTooltip
       .select("rect")
       .attr("x", xScale(sellDate) - 85)
@@ -278,7 +257,6 @@ function dragged(event) {
     updateTooltip(sellTooltip, sellDate, sellPrice);
   }
 
-  // Update cost displays
   updateCostDisplays();
 }
 
@@ -294,16 +272,12 @@ function findClosestPoint(targetDate) {
   });
 }
 
-// Update cost displays for each house type
 function updateCostDisplays() {
   if (!buyPrice) return;
 
-  // Calculate costs for each house type
   const regularCost = buyPrice;
   const expensiveCost = buyPrice * 2;
   const veryExpensiveCost = buyPrice * 3;
-
-  // Format and display
   const formatCost = (cost) => d3.format("$,.0f")(cost);
 
   const regularEl = document.getElementById("regular_home_cost");
