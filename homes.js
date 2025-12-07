@@ -6,6 +6,7 @@ let sellDate = null;
 let sellPrice = null;
 let xScale, yScale;
 let svg, g, line, buyMarker, sellMarker, buyText, sellText;
+let buyTooltip, sellTooltip;
 
 // Load and process data
 d3.csv("MSPUS.csv").then((data) => {
@@ -129,6 +130,22 @@ function createChart() {
     .style("font-weight", "bold")
     .text("Buy");
 
+  // Buy tooltip
+  buyTooltip = buyGroup.append("g").attr("class", "buy-tooltip");
+
+  buyTooltip
+    .append("rect")
+    .attr("x", xScale(buyDate) - 70)
+    .attr("y", yScale(buyPrice) - 60)
+    .attr("width", 140)
+    .attr("height", 40)
+    .attr("fill", "white")
+    .attr("stroke", "green")
+    .attr("stroke-width", 2)
+    .attr("rx", 5);
+
+  updateTooltip(buyTooltip, buyDate, buyPrice);
+
   // Create sell marker (red star)
   const sellGroup = g.append("g").attr("class", "sell-marker");
   sellMarker = sellGroup
@@ -156,6 +173,56 @@ function createChart() {
     .style("font-size", "16px")
     .style("font-weight", "bold")
     .text("Sell");
+
+  // Sell tooltip
+  sellTooltip = sellGroup.append("g").attr("class", "sell-tooltip");
+
+  sellTooltip
+    .append("rect")
+    .attr("x", xScale(sellDate) - 70)
+    .attr("y", yScale(sellPrice) - 60)
+    .attr("width", 140)
+    .attr("height", 40)
+    .attr("fill", "white")
+    .attr("stroke", "red")
+    .attr("stroke-width", 2)
+    .attr("rx", 5);
+
+  updateTooltip(sellTooltip, sellDate, sellPrice);
+}
+
+// Format tooltip text
+function formatTooltip(date, price) {
+  const dateStr = d3.timeFormat("%Y-%m-%d")(date);
+  const priceStr = d3.format("$,.0f")(price);
+  return `${dateStr}\n${priceStr}`;
+}
+
+// Update tooltip with line breaks
+function updateTooltip(tooltip, date, price) {
+  const dateStr = d3.timeFormat("%Y-%m-%d")(date);
+  const priceStr = d3.format("$,.0f")(price);
+
+  tooltip.selectAll("text").remove();
+
+  tooltip
+    .append("text")
+    .attr("x", xScale(date))
+    .attr("y", yScale(price) - 50)
+    .attr("text-anchor", "middle")
+    .attr("fill", "black")
+    .style("font-size", "11px")
+    .text(dateStr);
+
+  tooltip
+    .append("text")
+    .attr("x", xScale(date))
+    .attr("y", yScale(price) - 35)
+    .attr("text-anchor", "middle")
+    .attr("fill", "black")
+    .style("font-size", "11px")
+    .style("font-weight", "bold")
+    .text(priceStr);
 }
 
 function dragStarted(event) {
@@ -184,6 +251,13 @@ function dragged(event) {
       `translate(${xScale(buyDate)},${yScale(buyPrice)})`
     );
     buyText.attr("x", xScale(buyDate)).attr("y", yScale(buyPrice) - 15);
+
+    // Update buy tooltip
+    buyTooltip
+      .select("rect")
+      .attr("x", xScale(buyDate) - 70)
+      .attr("y", yScale(buyPrice) - 60);
+    updateTooltip(buyTooltip, buyDate, buyPrice);
   } else {
     sellDate = closest.date;
     sellPrice = closest.value;
@@ -192,6 +266,13 @@ function dragged(event) {
       `translate(${xScale(sellDate)},${yScale(sellPrice)})`
     );
     sellText.attr("x", xScale(sellDate)).attr("y", yScale(sellPrice) - 15);
+
+    // Update sell tooltip
+    sellTooltip
+      .select("rect")
+      .attr("x", xScale(sellDate) - 70)
+      .attr("y", yScale(sellPrice) - 60);
+    updateTooltip(sellTooltip, sellDate, sellPrice);
   }
 }
 
