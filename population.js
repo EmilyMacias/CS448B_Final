@@ -90,8 +90,12 @@ d3.csv("population_filtered_by_investment.csv").then((data) => {
 
   function updateColors() {
     const filters = getSelectedFilters();
-    circles.attr("fill", (d) => {
-      return matchesFilters(d, filters) ? "#8b0000" : "#808080";
+
+    // Count how many items match the filters
+    const matchCount = data.filter((d) => matchesFilters(d, filters)).length;
+
+    circles.attr("fill", (d, i) => {
+      return i < matchCount ? "#8b0000" : "#808080";
     });
   }
 
