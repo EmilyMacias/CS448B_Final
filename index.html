@@ -68,9 +68,29 @@
       }
       #buy_homes_buttons {
         display: flex;
-        flex-direction: row;
-        justify-content: left;
-        margin-top: 20px;
+        flex-direction: column;
+        justify-content: flex-start;
+        gap: 20px;
+        flex-shrink: 0;
+      }
+      .home-section {
+        padding: 20px;
+        border: 2px solid #ccc;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        min-width: 200px;
+      }
+      .home-section img {
+        width: 50px;
+        height: 50px;
+        margin-bottom: 10px;
+      }
+      .home-section p {
+        margin: 0;
+        font-size: 16px;
+        text-align: center;
       }
       .emphasis-text {
         font-weight: 400;
@@ -87,26 +107,6 @@
         height: 30px;
         background-color: #8f8888;
         flex-shrink: 0;
-      }
-      .buy-home-button {
-        padding: 10px 20px;
-        background-color: white;
-        border: 1px solid #ccc;
-        cursor: pointer;
-        margin: 5px;
-        font-size: 20px;
-      }
-      .buy-home-button:hover {
-        background-color: #e0e0e0;
-      }
-      .buy-home-button:active {
-        background-color: #d0d0d0;
-      }
-      .buy-home-button img {
-        width: 50px;
-        height: 50px;
-        margin-right: 8px;
-        vertical-align: middle;
       }
     </style>
   </head>
@@ -546,23 +546,32 @@
         great-grandparents buying and selling homes, how does it help them build
         wealth?
       </p>
-      <div id="homes_chart"><script src="homes.js"></script></div>
-      <div id="buy_homes_buttons">
-        <button id="buy_regular_home" class="buy-home-button">
-          <img src="noun-two-story-house-4242526.png" alt="Two-story house" />
-          Buy Home at Median Price
-        </button>
-        <button id="buy_expensive_home" class="buy-home-button">
-          <img
-            src="noun-three-story-house-4242446.png"
-            alt="Three-story house"
-          />
-          Buy Home at 2x Median Price
-        </button>
-        <button id="buy_very_expensive_home" class="buy-home-button">
-          <img src="noun-mansion-7173180.png" alt="Mansion" />
-          Buy Home at 3x Median Price
-        </button>
+      <div
+        style="
+          display: flex;
+          flex-direction: row;
+          gap: 20px;
+          align-items: flex-start;
+        "
+      >
+        <div id="homes_chart"><script src="homes.js"></script></div>
+        <div id="buy_homes_buttons">
+          <div id="buy_regular_home" class="home-section">
+            <img src="noun-two-story-house-4242526.png" alt="Two-story house" />
+            <p>Buy Home at Median Price</p>
+          </div>
+          <div id="buy_expensive_home" class="home-section">
+            <img
+              src="noun-three-story-house-4242446.png"
+              alt="Three-story house"
+            />
+            <p>Buy Home at 2x Median Price</p>
+          </div>
+          <div id="buy_very_expensive_home" class="home-section">
+            <img src="noun-mansion-7173180.png" alt="Mansion" />
+            <p>Buy Home at 3x Median Price</p>
+          </div>
+        </div>
       </div>
     </div>
   </body>
