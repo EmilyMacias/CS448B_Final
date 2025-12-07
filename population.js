@@ -3,6 +3,7 @@ d3.csv("population_filtered_by_investment.csv").then((data) => {
     d.A50A = +d.A50A;
     d.A50B = +d.A50B;
     d.A41 = +d.A41;
+    d.A4A_new_w = +d.A4A_new_w;
   });
 
   const width = 800;
@@ -83,7 +84,10 @@ d3.csv("population_filtered_by_investment.csv").then((data) => {
       return false;
     }
 
-    if (filters.ethnicity.length > 0 && !filters.ethnicity.includes(d.A30)) {
+    if (
+      filters.ethnicity.length > 0 &&
+      !filters.ethnicity.includes(d.A4A_new_w)
+    ) {
       return false;
     }
 
@@ -142,6 +146,4 @@ d3.csv("population_filtered_by_investment.csv").then((data) => {
 
     updateColors();
   }, 100);
-
-  console.log(`Created ${data.length} dots`);
 });
