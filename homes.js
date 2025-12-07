@@ -341,15 +341,7 @@ function updateCostDisplays() {
   const veryExpensiveProfitEl = document.getElementById(
     "very_expensive_home_profit"
   );
-  const regularRealReturnEl = document.getElementById(
-    "regular_home_real_return"
-  );
-  const expensiveRealReturnEl = document.getElementById(
-    "expensive_home_real_return"
-  );
-  const veryExpensiveRealReturnEl = document.getElementById(
-    "very_expensive_home_real_return"
-  );
+  const housingRealReturnEl = document.getElementById("housing_real_return");
   const regularHomeBox = document.getElementById("buy_regular_home");
   const expensiveHomeBox = document.getElementById("buy_expensive_home");
   const veryExpensiveHomeBox = document.getElementById(
@@ -365,22 +357,10 @@ function updateCostDisplays() {
   const veryExpensiveProfit =
     veryExpensiveCost * growthFactor - veryExpensiveCost;
 
-  // Calculate real returns (same for all since they all grow by the same percentage)
-  const regularRealReturn = calculateHousingRealReturn(
+  // Calculate real return (same for all since they all grow by the same percentage)
+  const realReturn = calculateHousingRealReturn(
     regularCost,
     regularCost * growthFactor,
-    buyDate,
-    sellDate
-  );
-  const expensiveRealReturn = calculateHousingRealReturn(
-    expensiveCost,
-    expensiveCost * growthFactor,
-    buyDate,
-    sellDate
-  );
-  const veryExpensiveRealReturn = calculateHousingRealReturn(
-    veryExpensiveCost,
-    veryExpensiveCost * growthFactor,
     buyDate,
     sellDate
   );
@@ -400,33 +380,25 @@ function updateCostDisplays() {
     veryExpensiveProfitEl.textContent = formatCost(veryExpensiveProfit);
   }
 
-  // Update real return displays
-  if (regularRealReturnEl) {
-    regularRealReturnEl.textContent = `${regularRealReturn.toFixed(2)} %`;
-  }
-  if (expensiveRealReturnEl) {
-    expensiveRealReturnEl.textContent = `${expensiveRealReturn.toFixed(2)} %`;
-  }
-  if (veryExpensiveRealReturnEl) {
-    veryExpensiveRealReturnEl.textContent = `${veryExpensiveRealReturn.toFixed(
-      2
-    )} %`;
+  // Update real return display
+  if (housingRealReturnEl) {
+    housingRealReturnEl.textContent = `${realReturn.toFixed(2)} %`;
   }
 
   // Update background colors based on profit and real return
-  if (regularProfit < 0 || regularRealReturn < 0) {
+  if (regularProfit < 0 || realReturn < 0) {
     regularHomeBox.style.backgroundColor = "rgba(255, 200, 200, 0.4)";
   } else {
     regularHomeBox.style.backgroundColor = "rgba(200, 255, 200, 0.4)";
   }
 
-  if (expensiveProfit < 0 || expensiveRealReturn < 0) {
+  if (expensiveProfit < 0 || realReturn < 0) {
     expensiveHomeBox.style.backgroundColor = "rgba(255, 200, 200, 0.4)";
   } else {
     expensiveHomeBox.style.backgroundColor = "rgba(200, 255, 200, 0.4)";
   }
 
-  if (veryExpensiveProfit < 0 || veryExpensiveRealReturn < 0) {
+  if (veryExpensiveProfit < 0 || realReturn < 0) {
     veryExpensiveHomeBox.style.backgroundColor = "rgba(255, 200, 200, 0.4)";
   } else {
     veryExpensiveHomeBox.style.backgroundColor = "rgba(200, 255, 200, 0.4)";
