@@ -136,7 +136,7 @@ function createChart() {
   buyTooltip
     .append("rect")
     .attr("x", xScale(buyDate) - 70)
-    .attr("y", yScale(buyPrice) - 60)
+    .attr("y", yScale(buyPrice) - 85)
     .attr("width", 140)
     .attr("height", 40)
     .attr("fill", "white")
@@ -180,7 +180,7 @@ function createChart() {
   sellTooltip
     .append("rect")
     .attr("x", xScale(sellDate) - 70)
-    .attr("y", yScale(sellPrice) - 60)
+    .attr("y", yScale(sellPrice) - 85)
     .attr("width", 140)
     .attr("height", 40)
     .attr("fill", "white")
@@ -208,19 +208,19 @@ function updateTooltip(tooltip, date, price) {
   tooltip
     .append("text")
     .attr("x", xScale(date))
-    .attr("y", yScale(price) - 50)
+    .attr("y", yScale(price) - 75)
     .attr("text-anchor", "middle")
     .attr("fill", "black")
-    .style("font-size", "11px")
+    .style("font-size", "13px")
     .text(dateStr);
 
   tooltip
     .append("text")
     .attr("x", xScale(date))
-    .attr("y", yScale(price) - 35)
+    .attr("y", yScale(price) - 60)
     .attr("text-anchor", "middle")
     .attr("fill", "black")
-    .style("font-size", "11px")
+    .style("font-size", "13px")
     .style("font-weight", "bold")
     .text(priceStr);
 }
@@ -256,7 +256,7 @@ function dragged(event) {
     buyTooltip
       .select("rect")
       .attr("x", xScale(buyDate) - 70)
-      .attr("y", yScale(buyPrice) - 60);
+      .attr("y", yScale(buyPrice) - 85);
     updateTooltip(buyTooltip, buyDate, buyPrice);
   } else {
     sellDate = closest.date;
@@ -271,7 +271,7 @@ function dragged(event) {
     sellTooltip
       .select("rect")
       .attr("x", xScale(sellDate) - 70)
-      .attr("y", yScale(sellPrice) - 60);
+      .attr("y", yScale(sellPrice) - 85);
     updateTooltip(sellTooltip, sellDate, sellPrice);
   }
 }
