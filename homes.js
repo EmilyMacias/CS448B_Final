@@ -42,15 +42,16 @@ function plotChart(data) {
     mode: "markers+text",
     marker: {
       symbol: "star",
-      size: 20,
+      size: 25,
       color: "green",
+      line: { width: 2, color: "darkgreen" },
     },
     name: "Buy",
     text: ["Buy"],
     textposition: "top center",
     textfont: { color: "green", size: 16, family: "Arial" },
     showlegend: false,
-    hoverinfo: "skip",
+    hoverinfo: "text",
   };
 
   // Sell marker (star shape, red)
@@ -61,15 +62,16 @@ function plotChart(data) {
     mode: "markers+text",
     marker: {
       symbol: "star",
-      size: 20,
+      size: 25,
       color: "red",
+      line: { width: 2, color: "darkred" },
     },
     name: "Sell",
     text: ["Sell"],
     textposition: "top center",
     textfont: { color: "red", size: 16, family: "Arial" },
     showlegend: false,
-    hoverinfo: "skip",
+    hoverinfo: "text",
   };
 
   const layout = {
@@ -88,35 +90,20 @@ function plotChart(data) {
 
 function setupDragHandlers() {
   const chartDiv = document.getElementById("homes_chart");
-  let selectedMarker = null;
+  let isDragging = false;
+  let dragMarkerType = null;
+  let clickedOnMarker = false;
 
-  // Click on marker to select it, then click on line to move it
+  // Detect click on marker
   chartDiv.on("plotly_click", (data) => {
     const point = data.points[0];
-
-    // Select marker
     if (point.data.name === "Buy" || point.data.name === "Sell") {
-      selectedMarker = point.data.name.toLowerCase();
-      return;
-    }
-
-    // Move selected marker to clicked point on line
-    if (
-      selectedMarker &&
-      point.data.name === "Median Housing Prices in the US"
-    ) {
-      const closest = findClosestPoint(point.x);
-
-      if (selectedMarker === "buy") {
-        buyDate = closest.date;
-        buyPrice = closest.value;
-      } else {
-        sellDate = closest.date;
-        sellPrice = closest.value;
-      }
-
-      updateMarkers();
-      selectedMarker = null; // Deselect after moving
+      clickedOnMarker = true;
+      isDragging = true;
+      dragMarkerType = point.data.name.toLowerCase();
+      chartDiv.style.cursor = "grabbing";
+    } else {
+      clickedOnMarker = false;
     }
   });
 
@@ -130,6 +117,57 @@ function setupDragHandlers() {
       return diff < closestDiff ? d : closest;
     });
   }
+
+  // Convert pixel to data coordinates
+  function pixelToData(x, y) {
+    const rect = chartDiv.getBoundingClientRect();
+    const xPixel = x - rect.left;
+    const yPixel = y - rect.top;
+
+    const xaxis = chartDiv._fullLayout.xaxis;
+    const yaxis = chartDiv._fullLayout.yaxis;
+
+    const xFraction = (xPixel - xaxis._offset) / xaxis._length;
+    const yFraction = 1 - (yPixel - yaxis._offset) / yaxis._length;
+
+    const xRange = xaxis.range[1] - xaxis.range[0];
+    const yRange = yaxis.range[1] - yaxis.range[0];
+
+    return {
+      x: xaxis.range[0] + xFraction * xRange,
+      y: yaxis.range[0] + yFraction * yRange,
+    };
+  }
+
+  // Mouse move for dragging
+  const handleMouseMove = (e) => {
+    if (isDragging && dragMarkerType) {
+      const dataCoords = pixelToData(e.clientX, e.clientY);
+      const closest = findClosestPoint(dataCoords.x);
+
+      if (dragMarkerType === "buy") {
+        buyDate = closest.date;
+        buyPrice = closest.value;
+      } else {
+        sellDate = closest.date;
+        sellPrice = closest.value;
+      }
+
+      updateMarkers();
+    }
+  };
+
+  // Mouse up to stop dragging
+  const handleMouseUp = () => {
+    if (isDragging) {
+      isDragging = false;
+      dragMarkerType = null;
+      chartDiv.style.cursor = "default";
+    }
+  };
+
+  document.addEventListener("mousemove", handleMouseMove);
+  document.addEventListener("mouseup", handleMouseUp);
 
   // Update marker positions
   function updateMarkers() {
