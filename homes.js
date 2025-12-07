@@ -283,16 +283,30 @@ function updateCostDisplays() {
   const regularEl = document.getElementById("regular_home_cost");
   const expensiveEl = document.getElementById("expensive_home_cost");
   const veryExpensiveEl = document.getElementById("very_expensive_home_cost");
+  const regularProfitEl = document.getElementById("regular_home_profit");
+  const expensiveProfitEl = document.getElementById("expensive_home_profit");
+  const veryExpensiveProfitEl = document.getElementById(
+    "very_expensive_home_profit"
+  );
+
+  const costPercentChange = sellPrice / buyPrice;
 
   if (regularEl) {
     regularEl.textContent = formatCost(regularCost);
+    regularProfitEl.textContent = formatCost(sellPrice - regularCost);
   }
 
   if (expensiveEl) {
     expensiveEl.textContent = formatCost(expensiveCost);
+    expensiveProfitEl.textContent = formatCost(
+      expensiveCost * (1 + costPercentChange) - expensiveCost
+    );
   }
 
   if (veryExpensiveEl) {
     veryExpensiveEl.textContent = formatCost(veryExpensiveCost);
+    veryExpensiveProfitEl.textContent = formatCost(
+      veryExpensiveCost * (1 + costPercentChange) - veryExpensiveCost
+    );
   }
 }
