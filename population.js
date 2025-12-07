@@ -116,15 +116,18 @@ d3.csv("population_filtered_by_investment.csv").then((data) => {
   setTimeout(() => {
     const allRadioButtons = document.querySelectorAll('input[type="radio"]');
     allRadioButtons.forEach((radio) => {
-      let wasChecked = false;
+      let wasCheckedBefore = false;
 
       radio.addEventListener("mousedown", (e) => {
-        if (wasChecked) {
-          radio.checked = false;
-          updateColors();
-        } else {
-          radio.checked = true;
-          updateColors();
+        wasCheckedBefore = radio.checked;
+      });
+
+      radio.addEventListener("click", (e) => {
+        if (wasCheckedBefore) {
+          setTimeout(() => {
+            radio.checked = false;
+            updateColors();
+          }, 10);
         }
       });
 
