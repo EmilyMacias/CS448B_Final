@@ -57,6 +57,16 @@ d3.csv("population_filtered_by_investment.csv").then((data) => {
       }
     }
 
+    for (let i = 1; i <= 6; i++) {
+      const ethnicityRadio = document.querySelector(
+        `input[name="ethnicity${i}"]:checked`
+      );
+      if (ethnicityRadio) {
+        filters.ethnicity.push(+ethnicityRadio.value);
+        break;
+      }
+    }
+
     return filters;
   }
 
