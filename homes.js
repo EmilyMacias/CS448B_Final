@@ -294,12 +294,14 @@ function updateCostDisplays() {
     "buy_very_expensive_home"
   );
 
-  const costPercentChange = sellPrice / buyPrice;
+  // Calculate growth factor based on how much the regular median price grew
+  const growthFactor = sellPrice / buyPrice;
   const regularProfit = sellPrice - regularCost;
-  const expensiveProfit =
-    expensiveCost * (1 + costPercentChange) - expensiveCost;
+  // Expensive house grows by same percentage: (2 * buyPrice) * growthFactor - (2 * buyPrice)
+  const expensiveProfit = expensiveCost * growthFactor - expensiveCost;
+  // Very expensive house grows by same percentage: (3 * buyPrice) * growthFactor - (3 * buyPrice)
   const veryExpensiveProfit =
-    veryExpensiveCost * (1 + costPercentChange) - veryExpensiveCost;
+    veryExpensiveCost * growthFactor - veryExpensiveCost;
 
   if (regularEl) {
     regularEl.textContent = formatCost(regularCost);
