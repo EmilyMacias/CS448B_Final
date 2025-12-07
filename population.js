@@ -3,7 +3,7 @@ d3.csv("population_filtered_by_investment.csv").then((data) => {
     d.A50A = +d.A50A;
     d.A50B = +d.A50B;
     d.A41 = +d.A41;
-    d.A4A_new_w = +d.A4A_new_w;
+    d.A8 = +d.A8;
   });
 
   const width = 800;
@@ -23,7 +23,7 @@ d3.csv("population_filtered_by_investment.csv").then((data) => {
     const filters = {
       gender: [],
       age: [],
-      ethnicity: [],
+      income: [],
       education: [],
     };
 
@@ -37,12 +37,12 @@ d3.csv("population_filtered_by_investment.csv").then((data) => {
       }
     }
 
-    for (let i = 1; i <= 6; i++) {
-      const ethnicityRadio = document.querySelector(
-        `input[name="ethnicity${i}"]:checked`
+    for (let i = 1; i <= 10; i++) {
+      const incomeRadio = document.querySelector(
+        `input[name="income${i}"]:checked`
       );
-      if (ethnicityRadio) {
-        filters.ethnicity.push(+ethnicityRadio.value);
+      if (incomeRadio) {
+        filters.income.push(+incomeRadio.value);
       }
     }
 
@@ -81,10 +81,7 @@ d3.csv("population_filtered_by_investment.csv").then((data) => {
       return false;
     }
 
-    if (
-      filters.ethnicity.length > 0 &&
-      !filters.ethnicity.includes(d.A4A_new_w)
-    ) {
+    if (filters.income.length > 0 && !filters.income.includes(d.A8)) {
       return false;
     }
 
