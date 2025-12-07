@@ -123,7 +123,7 @@ d3.csv("population_filtered_by_investment.csv").then((data) => {
       return (row / rows) * (height - 2 * padding) + padding;
     })
     .attr("r", 2)
-    .attr("fill", "steelblue")
+    .attr("fill", "red")
     .attr("opacity", 0.6);
 
   // Add event listeners to all radio buttons
