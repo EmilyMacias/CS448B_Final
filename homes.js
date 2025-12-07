@@ -288,6 +288,11 @@ function updateCostDisplays() {
   const veryExpensiveProfitEl = document.getElementById(
     "very_expensive_home_profit"
   );
+  const regularHomeBox = document.getElementById("buy_regular_home");
+  const expensiveHomeBox = document.getElementById("buy_expensive_home");
+  const veryExpensiveHomeBox = document.getElementById(
+    "buy_very_expensive_home"
+  );
 
   const costPercentChange = sellPrice / buyPrice;
   const regularProfit = sellPrice - regularCost;
@@ -312,20 +317,20 @@ function updateCostDisplays() {
   }
 
   if (regularProfit < 0) {
-    regularProfitEl.style.color = "red";
+    regularHomeBox.style.backgroundColor = "rgba(255, 200, 200, 0.4)";
   } else {
-    regularProfitEl.style.color = "green";
+    regularHomeBox.style.backgroundColor = "rgba(200, 255, 200, 0.4)";
   }
 
   if (expensiveProfit < 0) {
-    expensiveProfitEl.style.color = "red";
+    expensiveHomeBox.style.backgroundColor = "rgba(255, 200, 200, 0.4)";
   } else {
-    expensiveProfitEl.style.color = "green";
+    expensiveHomeBox.style.backgroundColor = "rgba(200, 255, 200, 0.4)";
   }
 
   if (veryExpensiveProfit < 0) {
-    veryExpensiveProfitEl.style.color = "red";
+    veryExpensiveHomeBox.style.backgroundColor = "rgba(255, 200, 200, 0.4)";
   } else {
-    veryExpensiveProfitEl.style.color = "green";
+    veryExpensiveHomeBox.style.backgroundColor = "rgba(200, 255, 200, 0.4)";
   }
 }
