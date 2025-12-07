@@ -123,7 +123,7 @@ function createChart() {
   buyText = buyGroup
     .append("text")
     .attr("x", xScale(buyDate))
-    .attr("y", yScale(buyPrice) - 15)
+    .attr("y", yScale(buyPrice) + 25)
     .attr("text-anchor", "middle")
     .attr("fill", "green")
     .style("font-size", "16px")
@@ -167,7 +167,7 @@ function createChart() {
   sellText = sellGroup
     .append("text")
     .attr("x", xScale(sellDate))
-    .attr("y", yScale(sellPrice) - 15)
+    .attr("y", yScale(sellPrice) + 25)
     .attr("text-anchor", "middle")
     .attr("fill", "red")
     .style("font-size", "16px")
@@ -250,7 +250,7 @@ function dragged(event) {
       "transform",
       `translate(${xScale(buyDate)},${yScale(buyPrice)})`
     );
-    buyText.attr("x", xScale(buyDate)).attr("y", yScale(buyPrice) - 15);
+    buyText.attr("x", xScale(buyDate)).attr("y", yScale(buyPrice) + 25);
 
     // Update buy tooltip
     buyTooltip
@@ -265,7 +265,7 @@ function dragged(event) {
       "transform",
       `translate(${xScale(sellDate)},${yScale(sellPrice)})`
     );
-    sellText.attr("x", xScale(sellDate)).attr("y", yScale(sellPrice) - 15);
+    sellText.attr("x", xScale(sellDate)).attr("y", yScale(sellPrice) + 25);
 
     // Update sell tooltip
     sellTooltip
