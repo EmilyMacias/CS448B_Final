@@ -94,7 +94,7 @@ d3.csv("population_filtered_by_investment.csv").then((data) => {
   function updateColors() {
     const filters = getSelectedFilters();
     circles.attr("fill", (d) => {
-      return matchesFilters(d, filters) ? "red" : "gray";
+      return matchesFilters(d, filters) ? "#8b0000" : "#808080";
     });
   }
 
@@ -115,7 +115,7 @@ d3.csv("population_filtered_by_investment.csv").then((data) => {
       return (row / rows) * (height - 2 * padding) + padding;
     })
     .attr("r", 2)
-    .attr("fill", "red")
+    .attr("fill", "#8b0000")
     .attr("opacity", 0.6);
 
   setTimeout(() => {
