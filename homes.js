@@ -1,5 +1,6 @@
 // Global variables
 let processedData = [];
+let inflationData = [];
 let buyDate = null;
 let buyPrice = null;
 let sellDate = null;
@@ -9,20 +10,31 @@ let svg, g, line, buyMarker, sellMarker, buyText, sellText;
 let buyTooltip, sellTooltip;
 
 // Load and process data
-d3.csv("MSPUS.csv").then((data) => {
-  processedData = data.map((d) => ({
-    date: new Date(d.observation_date),
-    value: +d.MSPUS,
-  }));
+Promise.all([d3.csv("MSPUS.csv"), d3.csv("yearly_inflation.csv")]).then(
+  ([housingData, inflation]) => {
+    processedData = housingData.map((d) => ({
+      date: new Date(d.observation_date),
+      value: +d.MSPUS,
+    }));
 
-  buyDate = processedData[0].date;
-  buyPrice = processedData[0].value;
-  const midIndex = Math.floor(processedData.length / 2);
-  sellDate = processedData[midIndex].date;
-  sellPrice = processedData[midIndex].value;
+    inflationData = inflation.map((d) => {
+      const date = new Date(d.Date);
+      return {
+        date: date,
+        year: date.getFullYear(),
+        value: +d.Value,
+      };
+    });
 
-  createChart();
-});
+    buyDate = processedData[0].date;
+    buyPrice = processedData[0].value;
+    const midIndex = Math.floor(processedData.length / 2);
+    sellDate = processedData[midIndex].date;
+    sellPrice = processedData[midIndex].value;
+
+    createChart();
+  }
+);
 
 function createChart() {
   d3.select("#homes_chart").selectAll("*").remove();
@@ -272,6 +284,47 @@ function findClosestPoint(targetDate) {
   });
 }
 
+// Filter inflation data for the period between buy and sell dates
+function filterInflationData(buyDate, sellDate) {
+  const buyYear = buyDate.getFullYear();
+  const sellYear = sellDate.getFullYear();
+  return inflationData.filter((d) => {
+    return d.year >= buyYear && d.year <= sellYear;
+  });
+}
+
+// Calculate cumulative inflation
+function calculateCumulativeInflation(filteredInflationData) {
+  if (!filteredInflationData || filteredInflationData.length === 0) {
+    return 1;
+  }
+  let cumulativeInflation = 1;
+  for (let i = 0; i < filteredInflationData.length; i++) {
+    cumulativeInflation *= 1 + filteredInflationData[i].value / 100;
+  }
+  return cumulativeInflation;
+}
+
+// Calculate real return for housing investment
+function calculateHousingRealReturn(buyPrice, sellPrice, buyDate, sellDate) {
+  if (!buyPrice || !sellPrice || !buyDate || !sellDate) {
+    return 0;
+  }
+  if (buyPrice === 0) {
+    return 0;
+  }
+
+  const filteredInflation = filterInflationData(buyDate, sellDate);
+  if (!filteredInflation || filteredInflation.length === 0) {
+    return 0;
+  }
+
+  const cumulativeInflation = calculateCumulativeInflation(filteredInflation);
+  const nominalReturnVal = sellPrice / buyPrice - 1;
+  const realReturn = (1 + nominalReturnVal) / cumulativeInflation - 1;
+  return realReturn * 100;
+}
+
 function updateCostDisplays() {
   if (!buyPrice) return;
 
@@ -288,6 +341,15 @@ function updateCostDisplays() {
   const veryExpensiveProfitEl = document.getElementById(
     "very_expensive_home_profit"
   );
+  const regularRealReturnEl = document.getElementById(
+    "regular_home_real_return"
+  );
+  const expensiveRealReturnEl = document.getElementById(
+    "expensive_home_real_return"
+  );
+  const veryExpensiveRealReturnEl = document.getElementById(
+    "very_expensive_home_real_return"
+  );
   const regularHomeBox = document.getElementById("buy_regular_home");
   const expensiveHomeBox = document.getElementById("buy_expensive_home");
   const veryExpensiveHomeBox = document.getElementById(
@@ -302,6 +364,26 @@ function updateCostDisplays() {
   // Very expensive house grows by same percentage: (3 * buyPrice) * growthFactor - (3 * buyPrice)
   const veryExpensiveProfit =
     veryExpensiveCost * growthFactor - veryExpensiveCost;
+
+  // Calculate real returns (same for all since they all grow by the same percentage)
+  const regularRealReturn = calculateHousingRealReturn(
+    regularCost,
+    regularCost * growthFactor,
+    buyDate,
+    sellDate
+  );
+  const expensiveRealReturn = calculateHousingRealReturn(
+    expensiveCost,
+    expensiveCost * growthFactor,
+    buyDate,
+    sellDate
+  );
+  const veryExpensiveRealReturn = calculateHousingRealReturn(
+    veryExpensiveCost,
+    veryExpensiveCost * growthFactor,
+    buyDate,
+    sellDate
+  );
 
   if (regularEl) {
     regularEl.textContent = formatCost(regularCost);
@@ -318,19 +400,33 @@ function updateCostDisplays() {
     veryExpensiveProfitEl.textContent = formatCost(veryExpensiveProfit);
   }
 
-  if (regularProfit < 0) {
+  // Update real return displays
+  if (regularRealReturnEl) {
+    regularRealReturnEl.textContent = `${regularRealReturn.toFixed(2)} %`;
+  }
+  if (expensiveRealReturnEl) {
+    expensiveRealReturnEl.textContent = `${expensiveRealReturn.toFixed(2)} %`;
+  }
+  if (veryExpensiveRealReturnEl) {
+    veryExpensiveRealReturnEl.textContent = `${veryExpensiveRealReturn.toFixed(
+      2
+    )} %`;
+  }
+
+  // Update background colors based on profit and real return
+  if (regularProfit < 0 || regularRealReturn < 0) {
     regularHomeBox.style.backgroundColor = "rgba(255, 200, 200, 0.4)";
   } else {
     regularHomeBox.style.backgroundColor = "rgba(200, 255, 200, 0.4)";
   }
 
-  if (expensiveProfit < 0) {
+  if (expensiveProfit < 0 || expensiveRealReturn < 0) {
     expensiveHomeBox.style.backgroundColor = "rgba(255, 200, 200, 0.4)";
   } else {
     expensiveHomeBox.style.backgroundColor = "rgba(200, 255, 200, 0.4)";
   }
 
-  if (veryExpensiveProfit < 0) {
+  if (veryExpensiveProfit < 0 || veryExpensiveRealReturn < 0) {
     veryExpensiveHomeBox.style.backgroundColor = "rgba(255, 200, 200, 0.4)";
   } else {
     veryExpensiveHomeBox.style.backgroundColor = "rgba(200, 255, 200, 0.4)";
