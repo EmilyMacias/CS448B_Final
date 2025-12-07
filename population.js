@@ -72,6 +72,17 @@ d3.csv("population_filtered_by_investment.csv").then((data) => {
 
   // Function to check if a data point matches the filters
   function matchesFilters(d, filters) {
+    // If no filters are selected, everything matches (all red)
+    const hasAnyFilter =
+      filters.gender !== null ||
+      filters.age !== null ||
+      filters.education !== null ||
+      filters.ethnicity !== null;
+
+    if (!hasAnyFilter) {
+      return true;
+    }
+
     // Gender filter (A50A)
     if (filters.gender !== null && d.A50A !== +filters.gender) {
       return false;
@@ -126,11 +137,37 @@ d3.csv("population_filtered_by_investment.csv").then((data) => {
     .attr("fill", "red")
     .attr("opacity", 0.6);
 
-  // Add event listeners to all radio buttons
-  const allRadioButtons = document.querySelectorAll('input[type="radio"]');
-  allRadioButtons.forEach((radio) => {
-    radio.addEventListener("change", updateColors);
-  });
+  // Add event listeners to all radio buttons with deselection capability
+  setTimeout(() => {
+    const allRadioButtons = document.querySelectorAll('input[type="radio"]');
+    allRadioButtons.forEach((radio) => {
+      // Store previous checked state for toggle functionality
+      let wasChecked = false;
+
+      radio.addEventListener("mousedown", (e) => {
+        wasChecked = radio.checked;
+      });
+
+      radio.addEventListener("click", (e) => {
+        // If clicking an already selected radio, deselect it after a brief delay
+        if (wasChecked) {
+          setTimeout(() => {
+            if (radio.checked) {
+              radio.checked = false;
+              updateColors();
+            }
+          }, 0);
+        }
+      });
+
+      radio.addEventListener("change", () => {
+        updateColors();
+      });
+    });
+
+    // Initial update - show all as red when no filters are selected
+    updateColors();
+  }, 100);
 
   console.log(`Created ${data.length} dots`);
 });
