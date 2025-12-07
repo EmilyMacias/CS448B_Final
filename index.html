@@ -114,7 +114,16 @@
       <br />
       <h1>Demistifying Investment</h1>
       <br />
-      <div id="population_chart"><script src="population.js"></script></div>
+      <div
+        id="population_chart_container"
+        style="display: flex; flex-direction: row; gap: 20px"
+      >
+        <div id="population_chart"><script src="population.js"></script></div>
+        <div id="options_container">
+          <input type="radio" name="gender" value="2" />
+          <label for="gender">Female</label>
+        </div>
+      </div>
       <p>
         Investing is a key part of financial success, being the differentiating
         factor from holding onto our money and having it lose value versus
