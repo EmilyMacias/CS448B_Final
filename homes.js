@@ -30,3 +30,15 @@ d3.csv("MSPUS.csv").then((data) => {
 
   plotChart(processed_data);
 });
+
+// Simple button selection - toggle selected class
+document.querySelectorAll(".buy-home-button").forEach((btn) => {
+  btn.onclick = () => {
+    const selected = btn.classList.toggle("selected");
+    if (selected) {
+      document
+        .querySelectorAll(".buy-home-button")
+        .forEach((b) => b !== btn && b.classList.remove("selected"));
+    }
+  };
+});

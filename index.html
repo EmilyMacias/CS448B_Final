@@ -69,7 +69,7 @@
       #buy_homes_buttons {
         display: flex;
         flex-direction: row;
-        justify-content: center;
+        justify-content: left;
         margin-top: 20px;
       }
       .emphasis-text {
@@ -98,9 +98,13 @@
       .buy-home-button:hover {
         background-color: #e0e0e0;
       }
+      .buy-home-button:active,
+      .buy-home-button.selected {
+        background-color: #d0d0d0;
+      }
       .buy-home-button img {
-        width: 20px;
-        height: 20px;
+        width: 40px;
+        height: 40px;
         margin-right: 8px;
         vertical-align: middle;
       }
