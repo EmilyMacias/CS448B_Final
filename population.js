@@ -99,7 +99,7 @@ d3.csv("population_filtered_by_investment.csv").then((data) => {
   function updateColors() {
     const filters = getSelectedFilters();
     circles.attr("fill", (d) => {
-      return matchesFilters(d, filters) ? "steelblue" : "gray";
+      return matchesFilters(d, filters) ? "red" : "gray";
     });
   }
 
