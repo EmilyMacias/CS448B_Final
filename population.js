@@ -83,10 +83,6 @@ d3.csv("population_filtered_by_investment.csv").then((data) => {
       return false;
     }
 
-    if (filters.ethnicity.length > 0 && !filters.ethnicity.includes(d.A30)) {
-      return false;
-    }
-
     return true;
   }
 
