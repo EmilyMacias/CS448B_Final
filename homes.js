@@ -290,23 +290,42 @@ function updateCostDisplays() {
   );
 
   const costPercentChange = sellPrice / buyPrice;
+  const regularProfit = sellPrice - regularCost;
+  const expensiveProfit =
+    expensiveCost * (1 + costPercentChange) - expensiveCost;
+  const veryExpensiveProfit =
+    veryExpensiveCost * (1 + costPercentChange) - veryExpensiveCost;
 
   if (regularEl) {
     regularEl.textContent = formatCost(regularCost);
-    regularProfitEl.textContent = formatCost(sellPrice - regularCost);
+    regularProfitEl.textContent = formatCost(regularProfit);
   }
 
   if (expensiveEl) {
     expensiveEl.textContent = formatCost(expensiveCost);
-    expensiveProfitEl.textContent = formatCost(
-      expensiveCost * (1 + costPercentChange) - expensiveCost
-    );
+    expensiveProfitEl.textContent = formatCost(expensiveProfit);
   }
 
   if (veryExpensiveEl) {
     veryExpensiveEl.textContent = formatCost(veryExpensiveCost);
-    veryExpensiveProfitEl.textContent = formatCost(
-      veryExpensiveCost * (1 + costPercentChange) - veryExpensiveCost
-    );
+    veryExpensiveProfitEl.textContent = formatCost(veryExpensiveProfit);
+  }
+
+  if (regularProfit < 0) {
+    regularProfitEl.style.color = "red";
+  } else {
+    regularProfitEl.style.color = "green";
+  }
+
+  if (expensiveProfit < 0) {
+    expensiveProfitEl.style.color = "red";
+  } else {
+    expensiveProfitEl.style.color = "green";
+  }
+
+  if (veryExpensiveProfit < 0) {
+    veryExpensiveProfitEl.style.color = "red";
+  } else {
+    veryExpensiveProfitEl.style.color = "green";
   }
 }
