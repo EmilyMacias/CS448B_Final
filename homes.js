@@ -123,7 +123,7 @@ function createChart() {
   buyText = buyGroup
     .append("text")
     .attr("x", xScale(buyDate))
-    .attr("y", yScale(buyPrice) + 25)
+    .attr("y", yScale(buyPrice) - 25)
     .attr("text-anchor", "middle")
     .attr("fill", "green")
     .style("font-size", "16px")
@@ -167,7 +167,7 @@ function createChart() {
   sellText = sellGroup
     .append("text")
     .attr("x", xScale(sellDate))
-    .attr("y", yScale(sellPrice) + 25)
+    .attr("y", yScale(sellPrice) - 25)
     .attr("text-anchor", "middle")
     .attr("fill", "red")
     .style("font-size", "16px")
