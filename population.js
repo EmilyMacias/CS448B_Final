@@ -34,7 +34,6 @@ d3.csv("population_filtered_by_investment.csv").then((data) => {
       const ageRadio = document.querySelector(`input[name="age${i}"]:checked`);
       if (ageRadio) {
         filters.age.push(+ageRadio.value);
-        break;
       }
     }
 
@@ -44,7 +43,6 @@ d3.csv("population_filtered_by_investment.csv").then((data) => {
       );
       if (ethnicityRadio) {
         filters.ethnicity.push(+ethnicityRadio.value);
-        break;
       }
     }
 
@@ -54,7 +52,6 @@ d3.csv("population_filtered_by_investment.csv").then((data) => {
       );
       if (educationRadio) {
         filters.education.push(+educationRadio.value);
-        break;
       }
     }
 
@@ -128,6 +125,7 @@ d3.csv("population_filtered_by_investment.csv").then((data) => {
 
       radio.addEventListener("mousedown", (e) => {
         wasCheckedBefore = radio.checked;
+        updateColors();
       });
 
       radio.addEventListener("click", (e) => {
