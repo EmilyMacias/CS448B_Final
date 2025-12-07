@@ -3,7 +3,7 @@ d3.csv("population_filtered_by_investment.csv").then((data) => {
     d.A50A = +d.A50A;
     d.A50B = +d.A50B;
     d.A41 = +d.A41;
-    d.A8 = +d.A8;
+    d.A8 = +d.A8_2021;
   });
 
   const width = 800;
@@ -62,7 +62,7 @@ d3.csv("population_filtered_by_investment.csv").then((data) => {
     const hasAnyFilter =
       filters.gender.length > 0 ||
       filters.age.length > 0 ||
-      filters.ethnicity.length > 0 ||
+      filters.income.length > 0 ||
       filters.education.length > 0;
 
     if (!hasAnyFilter) {
